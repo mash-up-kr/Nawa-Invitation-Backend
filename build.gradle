@@ -1,0 +1,50 @@
+buildscript {
+    ext {
+        springBootVersion = '2.1.7.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+group 'com.mashup.backend'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+//    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+    implementation("javax.validation:validation-api:2.0.1.Final")
+    implementation("org.hibernate:hibernate-core:5.4.6.Final")
+    implementation group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2' //swagger
+    implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
+
+    compile('org.mariadb.jdbc:mariadb-java-client') //maria-db
+
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    runtimeOnly 'com.h2database:h2' //h2
+    runtimeOnly 'mysql:mysql-connector-java'
+
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
