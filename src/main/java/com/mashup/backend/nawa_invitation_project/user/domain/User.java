@@ -1,9 +1,12 @@
 package com.mashup.backend.nawa_invitation_project.user.domain;
 
+import com.mashup.backend.nawa_invitation_project.common.domain.BaseTimeEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 
@@ -11,7 +14,9 @@ import javax.persistence.*;
 @Getter
 @Table(name = "users")
 @Entity
-public class User {
+@SQLDelete(sql = "UPDATE users SET removed_at=NOW() WHERE id=?")
+@Where(clause = "removed_at = null")
+public class User extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
