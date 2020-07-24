@@ -1,1 +1,1 @@
-# 감자한 초대장 Backend
+# 나와 초대장 Backend
