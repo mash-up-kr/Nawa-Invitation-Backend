@@ -25,15 +25,17 @@ public class Invitation extends BaseTimeEntity {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  private String invitationTitle;
+
   private String invitationContents;
 
   private String invitationTime;
 
   private String invitationAddress;
 
-  private String invitationLatitude;
+  private Integer invitationLatitude;
 
-  private String invitationLongitude;
+  private Integer invitationLongitude;
 
   private String hashedCode;
 
@@ -46,8 +48,8 @@ public class Invitation extends BaseTimeEntity {
       String invitationContents,
       String invitationTime,
       String invitationAddress,
-      String invitationLatitude,
-      String invitationLongitude,
+      Integer invitationLatitude,
+      Integer invitationLongitude,
       String hashedCode,
       Long usersId,
       Long templatesId
@@ -60,5 +62,10 @@ public class Invitation extends BaseTimeEntity {
     this.hashedCode = hashedCode;
     this.usersId = usersId;
     this.templatesId = templatesId;
+  }
+
+  public void updateInvitationWords(String invitationTitle, String invitationContents) {
+    this.invitationTitle = invitationTitle;
+    this.invitationContents = invitationContents;
   }
 }
