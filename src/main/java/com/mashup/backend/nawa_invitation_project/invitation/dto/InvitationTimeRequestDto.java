@@ -10,4 +10,6 @@ public class InvitationTimeRequestDto {
   private final String deviceIdentifier;
   private final Long templatesId;
   private final LocalDateTime invitationTime;
+  private final Integer invitationLatitude;
+  private final Integer invitationLongitude;
 }
