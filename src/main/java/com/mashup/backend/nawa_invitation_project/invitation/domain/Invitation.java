@@ -37,7 +37,7 @@ public class Invitation extends BaseTimeEntity {
 
   private Integer invitationLongitude;
 
-  private String hashedCode;
+  private String hashCode;
 
   private Long usersId;
 
@@ -50,7 +50,7 @@ public class Invitation extends BaseTimeEntity {
       String invitationAddress,
       Integer invitationLatitude,
       Integer invitationLongitude,
-      String hashedCode,
+      String hashCode,
       Long usersId,
       Long templatesId
   ) {
@@ -59,7 +59,7 @@ public class Invitation extends BaseTimeEntity {
     this.invitationAddress = invitationAddress;
     this.invitationLatitude = invitationLatitude;
     this.invitationLongitude = invitationLongitude;
-    this.hashedCode = hashedCode;
+    this.hashCode = hashCode;
     this.usersId = usersId;
     this.templatesId = templatesId;
   }
@@ -67,5 +67,9 @@ public class Invitation extends BaseTimeEntity {
   public void updateInvitationWords(String invitationTitle, String invitationContents) {
     this.invitationTitle = invitationTitle;
     this.invitationContents = invitationContents;
+  }
+
+  public void updateHashCode(String hashCode) {
+    this.hashCode = hashCode;
   }
 }
