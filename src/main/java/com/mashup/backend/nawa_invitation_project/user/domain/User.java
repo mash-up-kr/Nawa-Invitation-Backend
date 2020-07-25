@@ -15,7 +15,7 @@ import javax.persistence.*;
 @Table(name = "users")
 @Entity
 @SQLDelete(sql = "UPDATE users SET removed_at=NOW() WHERE id=?")
-@Where(clause = "removed_at = null")
+@Where(clause = "removed_at is null")
 public class User extends BaseTimeEntity {
 
   @Id
