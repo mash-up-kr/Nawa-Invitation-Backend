@@ -33,9 +33,9 @@ public class Invitation extends BaseTimeEntity {
 
   private String invitationAddress;
 
-  private String invitationLatitude;
+  private Integer invitationLatitude;
 
-  private String invitationLongitude;
+  private Integer invitationLongitude;
 
   private String hashedCode;
 
@@ -48,8 +48,8 @@ public class Invitation extends BaseTimeEntity {
       String invitationContents,
       String invitationTime,
       String invitationAddress,
-      String invitationLatitude,
-      String invitationLongitude,
+      Integer invitationLatitude,
+      Integer invitationLongitude,
       String hashedCode,
       Long usersId,
       Long templatesId
