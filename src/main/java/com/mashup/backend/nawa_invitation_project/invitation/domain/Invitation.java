@@ -14,9 +14,9 @@ import org.hibernate.annotations.Where;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-@Table(name = "users")
+@Table(name = "invitations")
 @Entity
-@SQLDelete(sql = "UPDATE invitation SET removed_at=NOW() WHERE id =?")
+@SQLDelete(sql = "UPDATE invitations SET removed_at=NOW() WHERE id =?")
 @Where(clause = "removed_at = null")
 public class Invitation {
 
@@ -24,11 +24,9 @@ public class Invitation {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  private String invitationIdentifier;
-
   private String invitationContents;
 
-  private String invitationTIme;
+  private String invitationTime;
 
   private String invitationAddress;
 
@@ -44,9 +42,8 @@ public class Invitation {
 
   @Builder
   private Invitation(
-      String invitationIdentifier,
       String invitationContents,
-      String invitationTIme,
+      String invitationTime,
       String invitationAddress,
       String invitationLatitude,
       String invitationLongitude,
@@ -54,9 +51,8 @@ public class Invitation {
       Long usersId,
       Long templatesId
   ) {
-    this.invitationIdentifier = invitationIdentifier;
     this.invitationContents = invitationContents;
-    this.invitationTIme = invitationTIme;
+    this.invitationTime = invitationTime;
     this.invitationAddress = invitationAddress;
     this.invitationLatitude = invitationLatitude;
     this.invitationLongitude = invitationLongitude;
