@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpClientErrorException;
+import springfox.documentation.annotations.ApiIgnore;
 
 @RequiredArgsConstructor
 @RestController
@@ -32,6 +33,7 @@ public class TemplateController {
         .body(templateService.getTemplateTypeList(deviceIdentifier));
   }
 
+  @ApiIgnore
   @PostMapping("/template-types/dummy")
   public ResponseEntity<Void> addTemplateTypesData() {
     templateRepository.save(Template.builder()
