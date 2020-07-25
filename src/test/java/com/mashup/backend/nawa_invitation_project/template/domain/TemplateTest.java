@@ -1,7 +1,5 @@
-package com.mashup.backend.nawa_invitation_project.template;
+package com.mashup.backend.nawa_invitation_project.template.domain;
 
-import com.mashup.backend.nawa_invitation_project.template.domain.Template;
-import com.mashup.backend.nawa_invitation_project.template.domain.TemplateRepository;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import org.junit.After;

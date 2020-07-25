@@ -15,7 +15,7 @@ import javax.persistence.*;
 @Table(name = "templates")
 @Entity
 @SQLDelete(sql = "UPDATE templates SET removed_at=NOW() WHERE id=?")
-@Where(clause = "removed_at = null")
+@Where(clause = "removed_at is null")
 public class Template extends BaseTimeEntity {
 
   @Id
