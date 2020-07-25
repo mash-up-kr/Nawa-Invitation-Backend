@@ -1,5 +1,6 @@
 package com.mashup.backend.nawa_invitation_project.invitation.controller;
 
+import com.mashup.backend.nawa_invitation_project.invitation.dto.InvitationTimeRequestDto;
 import com.mashup.backend.nawa_invitation_project.invitation.dto.InvitationWordsRequestDto;
 import com.mashup.backend.nawa_invitation_project.invitation.service.InvitationService;
 import io.swagger.annotations.Api;
@@ -19,12 +20,21 @@ public class InvitationController {
   private final InvitationService invitationService;
 
   @ApiOperation(value = "초대말 수정 API",
-  notes = "초대말 작성하기 완료시 호출되는 API입니다.")
+      notes = "초대말 입력 완료시 호출되는 API입니다.")
   @PatchMapping("/invitation/words")
   public ResponseEntity<Void> updateInvitationWords(
       @RequestBody InvitationWordsRequestDto invitationWordsRequestDto
   ) {
     invitationService.updateInvitationWords(invitationWordsRequestDto);
+    return ResponseEntity.status(HttpStatus.OK).build();
+  }
+
+  @ApiOperation(value = "날짜/시간 수정 API",
+      notes = "날짜/시간 입력 완료시 호출되는 API입니다.")
+  @PatchMapping("/invitation/time")
+  public ResponseEntity<Void> updateInvitationTime(
+      @RequestBody InvitationTimeRequestDto invitationTimeRequestDto
+  ) {
     return ResponseEntity.status(HttpStatus.OK).build();
   }
 }
