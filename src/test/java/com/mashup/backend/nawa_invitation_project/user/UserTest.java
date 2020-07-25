@@ -19,51 +19,52 @@ import static org.junit.Assert.assertThat;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class UserTest {
-    @Autowired
-    private UserRepository userRepository;
 
-    @After
-    public void cleanup(){
-        userRepository.deleteAll();
-    }
+  @Autowired
+  private UserRepository userRepository;
 
-    @Test
-    public void 사용자_생성_테스트(){
-        User createdUser = userRepository.save(User.builder()
-                .deviceIdentifier("123")
-                .nickName("닉네임")
-                .build());
+  @After
+  public void cleanup() {
+    userRepository.deleteAll();
+  }
 
-        assertThat(createdUser.getId(), is(1L));
-        assertThat(createdUser.getDeviceIdentifier(), is("123"));
-    }
+  @Test
+  public void 사용자_생성_테스트() {
+    User createdUser = userRepository.save(User.builder()
+        .deviceIdentifier("123")
+        .nickName("닉네임")
+        .build());
 
-    @Test
-    public void 사용자_소프트삭제_테스트_without_where_annotation(){
-        User savedUser = userRepository.save(User.builder()
-                                                    .deviceIdentifier("123")
-                                                    .nickName("닉네임")
-                                                    .build());
-        assertNull(savedUser.getRemovedAt()); //removed_at=null 일때 삭제되지 않은 사용자
+    assertThat(createdUser.getId(), is(1L));
+    assertThat(createdUser.getDeviceIdentifier(), is("123"));
+  }
 
-        userRepository.delete(savedUser);
+  @Test
+  public void 사용자_소프트삭제_테스트_without_where_annotation() {
+    User savedUser = userRepository.save(User.builder()
+        .deviceIdentifier("123")
+        .nickName("닉네임")
+        .build());
+    assertNull(savedUser.getRemovedAt()); //removed_at=null 일때 삭제되지 않은 사용자
 
-        User deletedUser = userRepository.findById(1L)
-                .orElseThrow(()-> new IllegalArgumentException("no such user"));
+    userRepository.delete(savedUser);
 
-        assertThat(deletedUser.getRemovedAt().isBefore(LocalDateTime.now()), is(true));
-    }
+    User deletedUser = userRepository.findById(1L)
+        .orElseThrow(() -> new IllegalArgumentException("no such user"));
 
-    @Test
-    public void 사용자_소프트삭제_테스트_with_where_annotation(){
-        User savedUser = userRepository.save(User.builder()
-                .deviceIdentifier("123")
-                .nickName("닉네임")
-                .build());
+    assertThat(deletedUser.getRemovedAt().isBefore(LocalDateTime.now()), is(true));
+  }
 
-        userRepository.delete(savedUser);
-        Optional<User> deletedUser = userRepository.findById(1L);
+  @Test
+  public void 사용자_소프트삭제_테스트_with_where_annotation() {
+    User savedUser = userRepository.save(User.builder()
+        .deviceIdentifier("123")
+        .nickName("닉네임")
+        .build());
 
-        assertThat(deletedUser.isPresent(), is(false));
-    }
+    userRepository.delete(savedUser);
+    Optional<User> deletedUser = userRepository.findById(1L);
+
+    assertThat(deletedUser.isPresent(), is(false));
+  }
 }

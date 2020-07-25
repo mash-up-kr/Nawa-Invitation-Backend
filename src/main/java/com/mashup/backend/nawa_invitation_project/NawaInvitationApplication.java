@@ -5,7 +5,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class NawaInvitationApplication {
-    public static void main(String[] args){
-        SpringApplication.run(NawaInvitationApplication.class, args);
-    }
+
+  public static void main(String[] args) {
+    SpringApplication.run(NawaInvitationApplication.class, args);
+  }
 }

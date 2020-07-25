@@ -17,17 +17,18 @@ import javax.persistence.*;
 @SQLDelete(sql = "UPDATE users SET removed_at=NOW() WHERE id=?")
 @Where(clause = "removed_at = null")
 public class User extends BaseTimeEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
-    private String deviceIdentifier;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    private String nickName;
+  private String deviceIdentifier;
 
-    @Builder
-    private User(String deviceIdentifier, String nickName){
-        this.deviceIdentifier=deviceIdentifier;
-        this.nickName=nickName;
-    }
+  private String nickName;
+
+  @Builder
+  private User(String deviceIdentifier, String nickName) {
+    this.deviceIdentifier = deviceIdentifier;
+    this.nickName = nickName;
+  }
 }
