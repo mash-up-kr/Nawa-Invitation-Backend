@@ -2,7 +2,6 @@ package com.mashup.backend.nawa_invitation_project.template;
 
 import com.mashup.backend.nawa_invitation_project.template.domain.Template;
 import com.mashup.backend.nawa_invitation_project.template.domain.TemplateRepository;
-import com.mashup.backend.nawa_invitation_project.user.domain.User;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import org.junit.After;
@@ -41,7 +40,7 @@ public class TemplateTest {
   }
 
   @Test
-  public void Where_어노테이션_없는_템플릿_소프트삭제_테스트(){
+  public void Where_어노테이션_없는_템플릿_소프트삭제_테스트() {
     Template savedTemplate = templateRepository.save(Template.builder()
         .typeName("애교만점형")
         .typeDescription("난 너가 꼭 와주면 좋겠어\uD83D\uDC96 와줄꺼지?")
@@ -52,13 +51,13 @@ public class TemplateTest {
 
     templateRepository.delete(savedTemplate);
     Template deletedTemplate = templateRepository.findById(1L)
-        .orElseThrow(()-> new IllegalArgumentException("no such template"));
+        .orElseThrow(() -> new IllegalArgumentException("no such template"));
 
     assertThat(deletedTemplate.getRemovedAt().isBefore(LocalDateTime.now()), is(true));
   }
 
   @Test
-  public void Where_어노테이션_있는_템플릿_소프트삭제_테스트(){
+  public void Where_어노테이션_있는_템플릿_소프트삭제_테스트() {
     Template savedTemplate = templateRepository.save(Template.builder()
         .typeName("애교만점형")
         .typeDescription("난 너가 꼭 와주면 좋겠어\uD83D\uDC96 와줄꺼지?")
