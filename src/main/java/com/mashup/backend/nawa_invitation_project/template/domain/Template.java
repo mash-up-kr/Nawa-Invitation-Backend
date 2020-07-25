@@ -18,20 +18,20 @@ import javax.persistence.*;
 @Where(clause = "removed_at = null")
 public class Template extends BaseTimeEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    private String typeName;
+  private String typeName;
 
-    private String typeDescription;
+  private String typeDescription;
 
-    private String imageUrl;
+  private String imageUrl;
 
-    @Builder
-    private Template(String typeName, String typeDescription, String imageUrl){
-        this.typeName=typeName;
-        this.typeDescription=typeDescription;
-        this.imageUrl=imageUrl;
-    }
+  @Builder
+  private Template(String typeName, String typeDescription, String imageUrl) {
+    this.typeName = typeName;
+    this.typeDescription = typeDescription;
+    this.imageUrl = imageUrl;
+  }
 }
