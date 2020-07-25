@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService {
 
-  private UserRepository userRepository;
+  private final UserRepository userRepository;
 
   public void createTestUser() {
     userRepository.save(User.builder().deviceIdentifier("1111").nickName("testName").build());
