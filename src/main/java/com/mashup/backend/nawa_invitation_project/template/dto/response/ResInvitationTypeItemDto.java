@@ -6,6 +6,8 @@ import lombok.Getter;
 @Getter
 public class ResInvitationTypeItemDto {
 
+  private Long templateId;
+
   private String typeName;
 
   private String typeDescription;
@@ -15,8 +17,10 @@ public class ResInvitationTypeItemDto {
   private Boolean isExistInvitation;
 
   @Builder
-  public ResInvitationTypeItemDto(String typeName, String typeDescription, String imageUrl,
+  public ResInvitationTypeItemDto(Long templateId, String typeName, String typeDescription,
+      String imageUrl,
       Boolean isExistInvitation) {
+    this.templateId = templateId;
     this.typeName = typeName;
     this.typeDescription = typeDescription;
     this.imageUrl = imageUrl;

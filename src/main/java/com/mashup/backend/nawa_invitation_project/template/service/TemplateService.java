@@ -31,6 +31,7 @@ public class TemplateService {
         .stream()
         .sorted(Comparator.comparing(Template::getId))
         .map(template -> ResInvitationTypeItemDto.builder()
+            .templateId(template.getId())
             .typeName(template.getTypeName())
             .typeDescription(template.getTypeDescription())
             .imageUrl(template.getImageUrl())
