@@ -31,11 +31,15 @@ public class Invitation extends BaseTimeEntity {
 
   private String invitationTime;
 
-  private String invitationAddress;
+  private String invitationAddressName;
 
-  private Integer invitationLatitude;
+  private String invitationRoadAddressName;
 
-  private Integer invitationLongitude;
+  private String invitationPlaceName;
+
+  private Double x;
+
+  private Double y;
 
   private String hashCode;
 
@@ -47,18 +51,22 @@ public class Invitation extends BaseTimeEntity {
   private Invitation(
       String invitationContents,
       String invitationTime,
-      String invitationAddress,
-      Integer invitationLatitude,
-      Integer invitationLongitude,
+      String invitationAddressName,
+      String invitationRoadAddressName,
+      String invitationPlaceName,
+      Double x,
+      Double y,
       String hashCode,
       Long usersId,
       Long templatesId
   ) {
     this.invitationContents = invitationContents;
     this.invitationTime = invitationTime;
-    this.invitationAddress = invitationAddress;
-    this.invitationLatitude = invitationLatitude;
-    this.invitationLongitude = invitationLongitude;
+    this.invitationAddressName = invitationAddressName;
+    this.invitationRoadAddressName = invitationRoadAddressName;
+    this.invitationPlaceName = invitationPlaceName;
+    this.x = x;
+    this.y = y;
     this.hashCode = hashCode;
     this.usersId = usersId;
     this.templatesId = templatesId;

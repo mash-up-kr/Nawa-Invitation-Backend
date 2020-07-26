@@ -27,7 +27,7 @@ public class UserController {
     return ResponseEntity.status(HttpStatus.OK).build();
   }
 
-  @ApiOperation(value = "유저 정보 확인 API",
+  @ApiOperation(value = "회원가입 API",
       notes = "첫 화면 접속 시 유저 정보 존재 여부를 확인하는 API")
   @PostMapping("/users")
   public ResponseEntity<Void> checkUserInfo(
