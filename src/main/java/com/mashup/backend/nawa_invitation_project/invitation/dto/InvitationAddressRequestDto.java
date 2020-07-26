@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public class InvitationAddressRequestDto {
-  private final String deviceIdentifier;
+
   private final Long templatesId;
   private final String invitationAddress;
 }

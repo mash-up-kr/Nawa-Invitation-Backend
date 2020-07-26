@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public class InvitationTimeRequestDto {
-  private final String deviceIdentifier;
+
   private final Long templatesId;
   private final LocalDateTime invitationTime;
   private final Integer invitationLatitude;

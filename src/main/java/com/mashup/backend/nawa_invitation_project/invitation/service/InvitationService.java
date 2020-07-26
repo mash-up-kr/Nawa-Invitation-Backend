@@ -19,9 +19,9 @@ public class InvitationService {
   private final InvitationRepository invitationRepository;
 
   @Transactional
-  public void updateInvitationWords(InvitationWordsRequestDto invitationWordsRequestDto) {
+  public void updateInvitationWords(String deviceIdentifier, InvitationWordsRequestDto invitationWordsRequestDto) {
     Optional<User> user = userRepository
-        .findByDeviceIdentifier(invitationWordsRequestDto.getDeviceIdentifier());
+        .findByDeviceIdentifier(deviceIdentifier);
 
     List<Invitation> invitation = invitationRepository
         .findByUsersIdAndTemplatesId(

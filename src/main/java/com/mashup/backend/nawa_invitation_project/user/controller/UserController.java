@@ -29,7 +29,7 @@ public class UserController {
 
   @ApiOperation(value = "유저 정보 확인 API",
       notes = "첫 화면 접속 시 유저 정보 존재 여부를 확인하는 API")
-  @GetMapping("/users")
+  @PostMapping("/users")
   public ResponseEntity<Void> checkUserInfo(
       @ApiParam(value = "기기 고유번호", required = true)
       @RequestHeader(value = "deviceIdentifier") String deviceIdentifier) {
