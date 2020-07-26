@@ -28,7 +28,7 @@ public class UserService {
   @Transactional
   public void findUserOrCreateUserAndInvitations(String deviceIdentifier) {
     Optional<User> user = userRepository.findByDeviceIdentifier(deviceIdentifier);
-    if (user.get() != null) {
+    if (user.isPresent()) {
       return;
     }
     User newUser = User.builder().deviceIdentifier(deviceIdentifier).build();
