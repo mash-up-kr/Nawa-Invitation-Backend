@@ -67,8 +67,19 @@ public class InvitationController {
     return ResponseEntity.status(HttpStatus.OK).body(invitationService.getDetailInvitation(hashCode));
   }
 
-  /*@PostMapping("/invitations/dummy")
+  @PostMapping("/invitations/dummy")
   public ResponseEntity<Void> addInvitationDummyData(){
-    invitationRepository.save(Invitation.builder().build());
-  }*/
+    invitationRepository.save(Invitation.builder()
+        .hashCode("testHashCode")
+        .invitationAddressName("testAddress")
+        .invitationContents("testContents")
+        .invitationPlaceName("testPlaceName")
+        .invitationRoadAddressName("testRoadAddressName")
+        .invitationTime("testTime")
+        .templatesId(1L)
+        .x(100D)
+        .y(200D)
+        .usersId(1L).build());
+    return ResponseEntity.status(HttpStatus.OK).build();
+  }
 }
