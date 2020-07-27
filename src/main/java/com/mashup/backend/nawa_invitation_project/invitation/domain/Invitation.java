@@ -1,6 +1,7 @@
 package com.mashup.backend.nawa_invitation_project.invitation.domain;
 
 import com.mashup.backend.nawa_invitation_project.common.domain.BaseTimeEntity;
+import java.time.LocalDateTime;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -29,7 +30,7 @@ public class Invitation extends BaseTimeEntity {
 
   private String invitationContents;
 
-  private String invitationTime;
+  private LocalDateTime invitationTime;
 
   private String invitationAddressName;
 
@@ -50,7 +51,7 @@ public class Invitation extends BaseTimeEntity {
   @Builder
   private Invitation(
       String invitationContents,
-      String invitationTime,
+      LocalDateTime invitationTime,
       String invitationAddressName,
       String invitationRoadAddressName,
       String invitationPlaceName,
@@ -79,5 +80,9 @@ public class Invitation extends BaseTimeEntity {
 
   public void updateHashCode(String hashCode) {
     this.hashCode = hashCode;
+  }
+
+  public void updateInvitationTime(LocalDateTime invitationTime) {
+    this.invitationTime = invitationTime;
   }
 }
