@@ -1,5 +1,6 @@
 package com.mashup.backend.nawa_invitation_project.invitation.dto.response;
 
+import java.time.LocalDateTime;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -12,7 +13,7 @@ public class ResDetailInvitationDto {
 
   private String invitationContents;
 
-  private String invitationTime;
+  private LocalDateTime invitationTime;
 
   private String invitationAddressName;
 
@@ -28,7 +29,7 @@ public class ResDetailInvitationDto {
   private ResDetailInvitationDto(String templateImageUrl,
       String invitationTitle,
       String invitationContents,
-      String invitationTime,
+      LocalDateTime invitationTime,
       String invitationAddressName,
       String invitationPlaceName,
       Double x,

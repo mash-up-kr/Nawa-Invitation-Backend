@@ -3,12 +3,13 @@ package com.mashup.backend.nawa_invitation_project.invitation.controller;
 import com.mashup.backend.nawa_invitation_project.invitation.domain.Invitation;
 import com.mashup.backend.nawa_invitation_project.invitation.domain.InvitationRepository;
 import com.mashup.backend.nawa_invitation_project.invitation.dto.InvitationAddressRequestDto;
-import com.mashup.backend.nawa_invitation_project.invitation.dto.InvitationTimeRequestDto;
+import com.mashup.backend.nawa_invitation_project.invitation.dto.request.InvitationTimeRequestDto;
 import com.mashup.backend.nawa_invitation_project.invitation.dto.InvitationWordsRequestDto;
 import com.mashup.backend.nawa_invitation_project.invitation.dto.response.ResDetailInvitationDto;
 import com.mashup.backend.nawa_invitation_project.invitation.service.InvitationService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,11 +43,12 @@ public class InvitationController {
 
   @ApiOperation(value = "날짜/시간 수정 API",
       notes = "날짜/시간 입력 완료시 호출되는 API입니다.")
-  @PatchMapping("/invitation/time")
+  @PatchMapping("/invitations/time")
   public ResponseEntity<Void> updateInvitationTime(
       @RequestHeader(value = "deviceIdentifier") String deviceIdentifier,
       @RequestBody InvitationTimeRequestDto invitationTimeRequestDto
   ) {
+    invitationService.updateInvitationTime(deviceIdentifier, invitationTimeRequestDto);
     return ResponseEntity.status(HttpStatus.OK).build();
   }
 
@@ -75,7 +77,7 @@ public class InvitationController {
         .invitationContents("testContents")
         .invitationPlaceName("testPlaceName")
         .invitationRoadAddressName("testRoadAddressName")
-        .invitationTime("testTime")
+        .invitationTime(LocalDateTime.now())
         .templatesId(1L)
         .x(100D)
         .y(200D)
