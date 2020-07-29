@@ -2,7 +2,7 @@ package com.mashup.backend.nawa_invitation_project.invitation.controller;
 
 import com.mashup.backend.nawa_invitation_project.invitation.domain.Invitation;
 import com.mashup.backend.nawa_invitation_project.invitation.domain.InvitationRepository;
-import com.mashup.backend.nawa_invitation_project.invitation.dto.InvitationAddressRequestDto;
+import com.mashup.backend.nawa_invitation_project.invitation.dto.request.InvitationAddressRequestDto;
 import com.mashup.backend.nawa_invitation_project.invitation.dto.request.InvitationTimeRequestDto;
 import com.mashup.backend.nawa_invitation_project.invitation.dto.InvitationWordsRequestDto;
 import com.mashup.backend.nawa_invitation_project.invitation.dto.response.ResDetailInvitationDto;
@@ -54,11 +54,12 @@ public class InvitationController {
 
   @ApiOperation(value = "장소 수정 API",
       notes = "장소 입력 완료시 호출되는 API입니다.")
-  @PatchMapping("/invitation/address")
+  @PatchMapping("/invitations/address")
   public ResponseEntity<Void> updateInvitationAddress(
       @RequestHeader(value = "deviceIdentifier") String deviceIdentifier,
       @RequestBody InvitationAddressRequestDto invitationAddressRequestDto
   ) {
+    invitationService.updateInvitationAddress(deviceIdentifier, invitationAddressRequestDto);
     return ResponseEntity.status(HttpStatus.OK).build();
   }
 
@@ -66,11 +67,12 @@ public class InvitationController {
   public ResponseEntity<ResDetailInvitationDto> getDetailInvitation(
       @PathVariable(value = "hash-code", required = true) String hashCode) {
 
-    return ResponseEntity.status(HttpStatus.OK).body(invitationService.getDetailInvitation(hashCode));
+    return ResponseEntity.status(HttpStatus.OK)
+        .body(invitationService.getDetailInvitation(hashCode));
   }
 
   @PostMapping("/invitations/dummy")
-  public ResponseEntity<Void> addInvitationDummyData(){
+  public ResponseEntity<Void> addInvitationDummyData() {
     invitationRepository.save(Invitation.builder()
         .hashCode("testHashCode")
         .invitationAddressName("testAddress")
