@@ -85,18 +85,4 @@ public class Invitation extends BaseTimeEntity {
   public void updateInvitationTime(LocalDateTime invitationTime) {
     this.invitationTime = invitationTime;
   }
-
-  public void updateInvitationAddress(
-      String invitationAddressName,
-      String invitationRoadAddressName,
-      String invitationPlaceName,
-      Double x,
-      Double y
-  ) {
-    this.invitationAddressName = invitationAddressName;
-    this.invitationRoadAddressName = invitationRoadAddressName;
-    this.invitationPlaceName = invitationPlaceName;
-    this.x = x;
-    this.y = y;
-  }
 }
