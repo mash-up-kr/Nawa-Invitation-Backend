@@ -1,4 +1,4 @@
-package com.mashup.backend.nawa_invitation_project.invitation.dto;
+package com.mashup.backend.nawa_invitation_project.invitation.dto.request;
 
 import java.time.LocalDateTime;
 import lombok.Getter;
@@ -10,6 +10,4 @@ public class InvitationTimeRequestDto {
 
   private final Long templatesId;
   private final LocalDateTime invitationTime;
-  private final Integer invitationLatitude;
-  private final Integer invitationLongitude;
 }

@@ -3,6 +3,8 @@ package com.mashup.backend.nawa_invitation_project.invitation.service;
 import com.mashup.backend.nawa_invitation_project.invitation.domain.Invitation;
 import com.mashup.backend.nawa_invitation_project.invitation.domain.InvitationRepository;
 import com.mashup.backend.nawa_invitation_project.invitation.dto.InvitationWordsRequestDto;
+import com.mashup.backend.nawa_invitation_project.invitation.dto.request.InvitationAddressRequestDto;
+import com.mashup.backend.nawa_invitation_project.invitation.dto.request.InvitationTimeRequestDto;
 import com.mashup.backend.nawa_invitation_project.invitation.dto.response.ResDetailInvitationDto;
 import com.mashup.backend.nawa_invitation_project.template.domain.Template;
 import com.mashup.backend.nawa_invitation_project.template.domain.TemplateRepository;
@@ -23,7 +25,8 @@ public class InvitationService {
   private final InvitationRepository invitationRepository;
 
   @Transactional
-  public void updateInvitationWords(String deviceIdentifier, InvitationWordsRequestDto invitationWordsRequestDto) {
+  public void updateInvitationWords(String deviceIdentifier,
+      InvitationWordsRequestDto invitationWordsRequestDto) {
     Optional<User> user = userRepository
         .findByDeviceIdentifier(deviceIdentifier);
 
@@ -43,12 +46,51 @@ public class InvitationService {
     );
   }
 
+  @Transactional
+  public void updateInvitationTime(String deviceIdentifier,
+      InvitationTimeRequestDto invitationTimeRequestDto) {
+    User user = userRepository.findByDeviceIdentifier(deviceIdentifier)
+        .orElseThrow(() -> new IllegalArgumentException("no user"));
+
+    List<Invitation> invitations = invitationRepository
+        .findByUsersIdAndTemplatesId(user.getId(), invitationTimeRequestDto.getTemplatesId());
+
+    if (invitations.isEmpty()) {
+      throw new IllegalArgumentException();
+    }
+
+    invitations.get(0).updateInvitationTime(invitationTimeRequestDto.getInvitationTime());
+  }
+
+  @Transactional
+  public void updateInvitationAddress(String deviceIdentifier,
+      InvitationAddressRequestDto invitationAddressRequestDto) {
+    User user = userRepository.findByDeviceIdentifier(deviceIdentifier)
+        .orElseThrow(() -> new IllegalArgumentException("no user"));
+
+    List<Invitation> invitations = invitationRepository
+        .findByUsersIdAndTemplatesId(user.getId(), invitationAddressRequestDto.getTemplatesId());
+
+    if (invitations.isEmpty()) {
+      throw new IllegalArgumentException();
+    }
+
+    invitations.get(0).updateInvitationAddress(
+        invitationAddressRequestDto.getInvitationAddressName(),
+        invitationAddressRequestDto.getInvitationRoadAddressName(),
+        invitationAddressRequestDto.getInvitationPlaceName(),
+        invitationAddressRequestDto.getX(),
+        invitationAddressRequestDto.getY()
+    );
+  }
+
   public ResDetailInvitationDto getDetailInvitation(String hashCode) {
     Invitation invitation = invitationRepository.findByHashCode(hashCode)
-        .orElseThrow(()-> new IllegalArgumentException("no invitation"));
+        .orElseThrow(() -> new IllegalArgumentException("no invitation"));
 
     Long templatesId = invitation.getTemplatesId();
-    Template template = templateRepository.findById(templatesId).orElseThrow(()-> new IllegalArgumentException("no template"));
+    Template template = templateRepository.findById(templatesId)
+        .orElseThrow(() -> new IllegalArgumentException("no template"));
 
     return ResDetailInvitationDto.builder()
         .invitationAddressName(invitation.getInvitationAddressName())
