@@ -63,7 +63,7 @@ public class TemplateController {
 
     templateRepository.save(Template.builder()
         .typeName("애교형")
-        .typeDescription("난 너가 꼭 와주면 좋겠어\uD83D\uDC96 와줄꺼징?")
+        .typeDescription("난 너가 꼭 와주면 좋겠어 \uD83D\uDC96 \n 와줄꺼징?")
         .imageUrl("https://nawa-invitation-bucket.s3.ap-northeast-2.amazonaws.com/template_type_image/img_template_type_charm.png")
         .build());
 
