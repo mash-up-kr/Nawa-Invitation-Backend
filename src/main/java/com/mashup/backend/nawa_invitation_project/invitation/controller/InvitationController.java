@@ -73,7 +73,7 @@ public class InvitationController {
       notes = "hash-code 에 해당하는 완성된 초대장을 조회하는 API입니다.")
   @GetMapping("/invitations/{hash-code}")
   @ApiImplicitParam(name = "hash-code", value = "초대장의 hash-code", required = true,
-      dataType = "string", paramType = "path", defaultValue = "")
+      dataType = "string", paramType = "path", defaultValue = "4523540f1504cd17100c4835e85b7eefd49911580f8efff0599a8f283be6b9e3")
   public ResponseEntity<ResDetailInvitationDto> getDetailInvitation(
       @PathVariable(value = "hash-code") String hashCode) {
 
