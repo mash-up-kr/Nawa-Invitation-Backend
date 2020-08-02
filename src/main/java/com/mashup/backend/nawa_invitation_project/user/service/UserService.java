@@ -31,16 +31,14 @@ public class UserService {
     if (user.isPresent()) {
       return;
     }
-    User newUser = User.builder().deviceIdentifier(deviceIdentifier).build();
-    userRepository.save(newUser);
+    User newUser = userRepository.save(User.builder().deviceIdentifier(deviceIdentifier).build());
     List<Template> templates = templateRepository.findAll();
     templates.forEach(template -> {
-          Invitation newInvitation = Invitation
-              .builder()
+          Invitation newInvitation = invitationRepository.save(
+              Invitation.builder()
               .usersId(newUser.getId())
               .templatesId(template.getId())
-              .build();
-          invitationRepository.save(newInvitation);
+              .build());
           String hashCodeUsingId = CustomUtil.getHashCode(newInvitation.getId());
           newInvitation.updateHashCode(hashCodeUsingId);
         }
