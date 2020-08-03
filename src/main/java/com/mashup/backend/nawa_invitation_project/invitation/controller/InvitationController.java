@@ -18,6 +18,7 @@ import java.util.NoSuchElementException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -83,6 +84,7 @@ public class InvitationController {
 
   @ApiIgnore
   @PostMapping("/invitations/dummy")
+  @Transactional
   public ResponseEntity<Void> addInvitationDummyData() {
     User testUser = userRepository.findByDeviceIdentifier("test-user")
         .orElseThrow(() -> new NoSuchElementException());
@@ -92,7 +94,6 @@ public class InvitationController {
           invitation.updateInvitationWords("[Test]모각코하러 모이자!", "[Test]나의 모임에 초대된 감자 친구들! 우리는 엄청난 서비스를 만들 수 있을거야!");
           invitation.updateInvitationTime(LocalDateTime.now());
           invitation.updateInvitationAddress("[Test]서울특별시 송파구 잠실1동 23-5", "[Test]마천로 328 오금현대아파트 43동","[Test]잠실1동 코워킹 스페이스",100.12D,200.31D);
-          invitationRepository.save(invitation);
       }
     );
     return ResponseEntity.status(HttpStatus.OK).build();
