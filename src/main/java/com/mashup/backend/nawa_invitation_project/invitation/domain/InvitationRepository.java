@@ -8,9 +8,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface InvitationRepository extends JpaRepository<Invitation, Long> {
 
-  Boolean existsByTemplatesIdAndUsersId(Long templateId, Long userId);
-
-  List<Invitation> findByUsersIdAndTemplatesId(Long usersId, Long templatesId);
+  Optional<Invitation> findByUsersIdAndTemplatesId(Long usersId, Long templatesId);
 
   Optional<Invitation> findByHashCode(String hashCode);
 

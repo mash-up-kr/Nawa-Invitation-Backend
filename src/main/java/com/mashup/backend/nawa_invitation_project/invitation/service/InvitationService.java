@@ -11,6 +11,7 @@ import com.mashup.backend.nawa_invitation_project.template.domain.TemplateReposi
 import com.mashup.backend.nawa_invitation_project.user.domain.User;
 import com.mashup.backend.nawa_invitation_project.user.domain.UserRepository;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,20 +28,14 @@ public class InvitationService {
   @Transactional
   public void updateInvitationWords(String deviceIdentifier,
       InvitationWordsRequestDto invitationWordsRequestDto) {
-    Optional<User> user = userRepository
-        .findByDeviceIdentifier(deviceIdentifier);
+    User user = userRepository.findByDeviceIdentifier(deviceIdentifier)
+        .orElseThrow(() -> new NoSuchElementException()); //TODO : custom exception
 
-    List<Invitation> invitation = invitationRepository
-        .findByUsersIdAndTemplatesId(
-            user.get().getId(),
-            invitationWordsRequestDto.getTemplatesId()
-        );
+    Invitation invitation = invitationRepository.findByUsersIdAndTemplatesId(user.getId(),
+        invitationWordsRequestDto.getTemplatesId())
+        .orElseThrow(() -> new NoSuchElementException()); //TODO : custom exception
 
-    if (invitation.isEmpty()) {
-      throw new IllegalArgumentException();
-    }
-
-    invitation.get(0).updateInvitationWords(
+    invitation.updateInvitationWords(
         invitationWordsRequestDto.getInvitationTitle(),
         invitationWordsRequestDto.getInvitationContents()
     );
@@ -50,32 +45,27 @@ public class InvitationService {
   public void updateInvitationTime(String deviceIdentifier,
       InvitationTimeRequestDto invitationTimeRequestDto) {
     User user = userRepository.findByDeviceIdentifier(deviceIdentifier)
-        .orElseThrow(() -> new IllegalArgumentException("no user"));
+        .orElseThrow(() -> new NoSuchElementException()); //TODO : custom exception
 
-    List<Invitation> invitations = invitationRepository
-        .findByUsersIdAndTemplatesId(user.getId(), invitationTimeRequestDto.getTemplatesId());
+    Invitation invitation = invitationRepository.findByUsersIdAndTemplatesId(user.getId(),
+        invitationTimeRequestDto.getTemplatesId())
+        .orElseThrow(() -> new NoSuchElementException()); //TODO : custom exception
 
-    if (invitations.isEmpty()) {
-      throw new IllegalArgumentException();
-    }
 
-    invitations.get(0).updateInvitationTime(invitationTimeRequestDto.getInvitationTime());
+    invitation.updateInvitationTime(invitationTimeRequestDto.getInvitationTime());
   }
 
   @Transactional
   public void updateInvitationAddress(String deviceIdentifier,
       InvitationAddressRequestDto invitationAddressRequestDto) {
     User user = userRepository.findByDeviceIdentifier(deviceIdentifier)
-        .orElseThrow(() -> new IllegalArgumentException("no user"));
+        .orElseThrow(() -> new NoSuchElementException()); //TODO : custom exception
 
-    List<Invitation> invitations = invitationRepository
-        .findByUsersIdAndTemplatesId(user.getId(), invitationAddressRequestDto.getTemplatesId());
+    Invitation invitation = invitationRepository.findByUsersIdAndTemplatesId(user.getId(),
+        invitationAddressRequestDto.getTemplatesId())
+        .orElseThrow(() -> new NoSuchElementException()); //TODO : custom exception
 
-    if (invitations.isEmpty()) {
-      throw new IllegalArgumentException();
-    }
-
-    invitations.get(0).updateInvitationAddress(
+    invitation.updateInvitationAddress(
         invitationAddressRequestDto.getInvitationAddressName(),
         invitationAddressRequestDto.getInvitationRoadAddressName(),
         invitationAddressRequestDto.getInvitationPlaceName(),
