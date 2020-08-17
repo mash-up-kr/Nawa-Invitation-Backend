@@ -5,6 +5,7 @@ import com.mashup.backend.nawa_invitation_project.invitation.domain.InvitationRe
 import com.mashup.backend.nawa_invitation_project.invitation.dto.InvitationWordsRequestDto;
 import com.mashup.backend.nawa_invitation_project.invitation.dto.request.InvitationAddressRequestDto;
 import com.mashup.backend.nawa_invitation_project.invitation.dto.request.InvitationTimeRequestDto;
+import com.mashup.backend.nawa_invitation_project.invitation.dto.response.MapInfoDto;
 import com.mashup.backend.nawa_invitation_project.invitation.dto.response.ResDetailInvitationDto;
 import com.mashup.backend.nawa_invitation_project.template.domain.Template;
 import com.mashup.backend.nawa_invitation_project.template.domain.TemplateRepository;
@@ -51,7 +52,6 @@ public class InvitationService {
         invitationTimeRequestDto.getTemplatesId())
         .orElseThrow(() -> new NoSuchElementException()); //TODO : custom exception
 
-
     invitation.updateInvitationTime(invitationTimeRequestDto.getInvitationTime());
   }
 
@@ -83,14 +83,17 @@ public class InvitationService {
         .orElseThrow(() -> new IllegalArgumentException("no template"));
 
     return ResDetailInvitationDto.builder()
-        .invitationAddressName(invitation.getInvitationAddressName())
-        .invitationContents(invitation.getInvitationContents())
-        .invitationPlaceName(invitation.getInvitationPlaceName())
-        .invitationTime(invitation.getInvitationTime())
+        .templateBackgroundImageUrl(template.getBackgroundImageUrl())
         .invitationTitle(invitation.getInvitationTitle())
-        .templateImageUrl(template.getImageUrl())
-        .x(invitation.getX())
-        .y(invitation.getY())
+        .invitationContents(invitation.getInvitationContents())
+        .invitationTime(invitation.getInvitationTime())
+        .invitationPlaceName(invitation.getInvitationPlaceName())
+        .mapInfo(MapInfoDto.builder()
+            .invitationAddressName(invitation.getInvitationAddressName())
+            .invitationRoadAddressName(invitation.getInvitationRoadAddressName())
+            .x(invitation.getX())
+            .y(invitation.getY())
+            .build())
         .build();
   }
 }

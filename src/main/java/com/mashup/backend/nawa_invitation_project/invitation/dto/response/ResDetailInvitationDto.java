@@ -7,7 +7,7 @@ import lombok.Getter;
 @Getter
 public class ResDetailInvitationDto {
 
-  private String templateImageUrl;
+  private String templateBackgroundImageUrl;
 
   private String invitationTitle;
 
@@ -15,34 +15,25 @@ public class ResDetailInvitationDto {
 
   private LocalDateTime invitationTime;
 
-  private String invitationAddressName;
-
-  private String invitationRoadAddressName;
-
   private String invitationPlaceName;
 
-  private Double x;
-
-  private Double y;
+  private MapInfoDto mapInfo;
 
   @Builder
-  private ResDetailInvitationDto(String templateImageUrl,
+  private ResDetailInvitationDto(
+      String templateBackgroundImageUrl,
       String invitationTitle,
       String invitationContents,
       LocalDateTime invitationTime,
-      String invitationAddressName,
       String invitationPlaceName,
-      Double x,
-      Double y) {
-    this.templateImageUrl=templateImageUrl;
-    this.invitationTitle=invitationTitle;
-    this.invitationContents=invitationContents;
-    this.invitationTime=invitationTime;
-    this.invitationAddressName=invitationAddressName;
-    this.invitationRoadAddressName=invitationAddressName;
-    this.invitationPlaceName=invitationPlaceName;
-    this.x=x;
-    this.y=y;
+      MapInfoDto mapInfo
+  ) {
+    this.templateBackgroundImageUrl = templateBackgroundImageUrl;
+    this.invitationTitle = invitationTitle;
+    this.invitationContents = invitationContents;
+    this.invitationTime = invitationTime;
+    this.invitationPlaceName = invitationPlaceName;
+    this.mapInfo = mapInfo;
   }
 
 }
