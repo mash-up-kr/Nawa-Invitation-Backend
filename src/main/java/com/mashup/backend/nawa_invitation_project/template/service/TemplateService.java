@@ -37,10 +37,15 @@ public class TemplateService {
             .imageUrl(template.getImageUrl())
             .isExistInvitation(
                 invitationRepository.existsByTemplatesIdAndUsersId(template.getId(), user.getId()))
+            .invitationHashCode(getInvitationHashCode(template.getId(), user.getId()))
             .build())
         .collect(Collectors.toList());
 
     return ResInvitationTypeListDto.builder()
         .invitationTypeItemList(list).build();
+  }
+
+  private String getInvitationHashCode(Long templatesId, Long usersId) {
+    invitationRepository.findByUsersIdAndTemplatesId(usersId, templatesId);
   }
 }

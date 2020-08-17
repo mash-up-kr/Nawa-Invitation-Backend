@@ -16,14 +16,18 @@ public class ResInvitationTypeItemDto {
 
   private Boolean isExistInvitation;
 
+  private String invitationHashCode;
+
   @Builder
   public ResInvitationTypeItemDto(Long templateId, String typeName, String typeDescription,
       String imageUrl,
-      Boolean isExistInvitation) {
+      Boolean isExistInvitation,
+      String invitationHashCode) {
     this.templateId = templateId;
     this.typeName = typeName;
     this.typeDescription = typeDescription;
     this.imageUrl = imageUrl;
     this.isExistInvitation = isExistInvitation;
+    this.invitationHashCode = invitationHashCode;
   }
 }
