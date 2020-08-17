@@ -28,10 +28,14 @@ public class Template extends BaseTimeEntity {
 
   private String imageUrl;
 
+  private String backgroundImageUrl;
+
   @Builder
-  private Template(String typeName, String typeDescription, String imageUrl) {
+  private Template(String typeName, String typeDescription, String imageUrl,
+      String backgroundImageUrl) {
     this.typeName = typeName;
     this.typeDescription = typeDescription;
     this.imageUrl = imageUrl;
+    this.backgroundImageUrl = backgroundImageUrl;
   }
 }
