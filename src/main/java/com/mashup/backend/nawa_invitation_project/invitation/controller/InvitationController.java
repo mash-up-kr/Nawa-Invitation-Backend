@@ -25,7 +25,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.HttpClientErrorException;
 import springfox.documentation.annotations.ApiIgnore;
 
 @Api(tags = "초대장 관련 APIs")
@@ -82,6 +84,19 @@ public class InvitationController {
         .body(invitationService.getDetailInvitation(hashCode));
   }
 
+  @GetMapping("/invitations")
+  public ResponseEntity<ResDetailInvitationDto> getTemplateSpecificSingleInvitationInfo(
+      @RequestHeader(value = "deviceIdentifier") String deviceIdentifier,
+      @RequestParam(value = "template-id") Long templateId) {
+    if(templateId == null && deviceIdentifier == null){
+      throw new HttpClientErrorException(HttpStatus.BAD_REQUEST);
+    }
+    String hashCode = invitationService.getHashCode(deviceIdentifier, templateId);
+
+    return ResponseEntity.status(HttpStatus.OK)
+        .body(invitationService.getDetailInvitation(hashCode));
+  }
+
   @ApiIgnore
   @PostMapping("/invitations/dummy")
   @Transactional
@@ -90,11 +105,13 @@ public class InvitationController {
         .orElseThrow(() -> new NoSuchElementException());
 
     List<Invitation> invitationsList = invitationRepository.findByUsersId(testUser.getId());
-    invitationsList.forEach(invitation ->{
-          invitation.updateInvitationWords("[Test]모각코하러 모이자!", "[Test]나의 모임에 초대된 감자 친구들! 우리는 엄청난 서비스를 만들 수 있을거야!");
+    invitationsList.forEach(invitation -> {
+          invitation.updateInvitationWords("[Test]모각코하러 모이자!",
+              "[Test]나의 모임에 초대된 감자 친구들! 우리는 엄청난 서비스를 만들 수 있을거야!");
           invitation.updateInvitationTime(LocalDateTime.now());
-          invitation.updateInvitationAddress("서울특별시 서초구 서초4동", "서초대로73길 38","강남역 그레이프라운지",37.500651D,127.024547D);
-      }
+          invitation.updateInvitationAddress("서울특별시 서초구 서초4동", "서초대로73길 38", "강남역 그레이프라운지", 37.500651D,
+              127.024547D);
+        }
     );
     return ResponseEntity.status(HttpStatus.OK).build();
   }

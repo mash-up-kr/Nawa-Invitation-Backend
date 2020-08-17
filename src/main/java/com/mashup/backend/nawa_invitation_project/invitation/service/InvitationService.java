@@ -93,4 +93,18 @@ public class InvitationService {
         .y(invitation.getY())
         .build();
   }
+
+  public String getHashCode(String deviceIdentifier, Long templateId) {
+    User user = userRepository.findByDeviceIdentifier(deviceIdentifier)
+        .orElseThrow(()-> new NoSuchElementException());
+
+    if(!templateRepository.existsById(templateId)){
+      throw new NoSuchElementException();
+    }
+
+    Invitation invitation = invitationRepository.findByUsersIdAndTemplatesId(user.getId(), templateId)
+        .orElseThrow(()->new NoSuchElementException());
+
+    return invitation.getHashCode();
+  }
 }
