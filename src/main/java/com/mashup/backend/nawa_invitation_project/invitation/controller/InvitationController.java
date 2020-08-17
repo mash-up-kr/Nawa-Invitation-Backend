@@ -74,7 +74,7 @@ public class InvitationController {
       notes = "hash-code 에 해당하는 완성된 초대장을 조회하는 API입니다.")
   @GetMapping("/invitations/{hash-code}")
   @ApiImplicitParam(name = "hash-code", value = "초대장의 hash-code", required = true,
-      dataType = "string", paramType = "path", defaultValue = "4523540f1504cd17100c4835e85b7eefd49911580f8efff0599a8f283be6b9e3")
+      dataType = "string", paramType = "path")
   public ResponseEntity<ResDetailInvitationDto> getDetailInvitation(
       @PathVariable(value = "hash-code") String hashCode) {
 
@@ -93,7 +93,7 @@ public class InvitationController {
     invitationsList.forEach(invitation ->{
           invitation.updateInvitationWords("[Test]모각코하러 모이자!", "[Test]나의 모임에 초대된 감자 친구들! 우리는 엄청난 서비스를 만들 수 있을거야!");
           invitation.updateInvitationTime(LocalDateTime.now());
-          invitation.updateInvitationAddress("[Test]서울특별시 송파구 잠실1동 23-5", "[Test]마천로 328 오금현대아파트 43동","[Test]잠실1동 코워킹 스페이스",100.12D,200.31D);
+          invitation.updateInvitationAddress("서울특별시 서초구 서초4동", "서초대로73길 38","강남역 그레이프라운지",37.500651D,127.024547D);
       }
     );
     return ResponseEntity.status(HttpStatus.OK).build();

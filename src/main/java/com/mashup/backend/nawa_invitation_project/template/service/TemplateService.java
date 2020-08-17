@@ -38,16 +38,20 @@ public class TemplateService {
             .typeDescription(template.getTypeDescription())
             .imageUrl(template.getImageUrl())
             .isExistInvitation(isExistUsersTemplateInvitation(user.getId(), template.getId()))
+            .invitationHashCode(getInvitationHashCode(template.getId(),user.getId()))
             .build())
         .collect(Collectors.toList());
 
     return ResInvitationTypeListDto.builder()
         .invitationTypeItemList(list).build();
   }
-  /*
+
   private String getInvitationHashCode(Long templatesId, Long usersId) {
-    invitationRepository.findByUsersIdAndTemplatesId(usersId, templatesId);
-  }*/
+    Invitation invitation = invitationRepository.findByUsersIdAndTemplatesId(usersId, templatesId)
+        .orElseThrow(()->new NoSuchElementException());
+
+    return invitation.getHashCode();
+  }
 
   private Boolean isExistUsersTemplateInvitation(Long usersId, Long templatesId) {
     Invitation invitation = invitationRepository.findByUsersIdAndTemplatesId(usersId, templatesId)
