@@ -21,9 +21,6 @@ public class UserService {
   private final TemplateRepository templateRepository;
   private final InvitationRepository invitationRepository;
 
-  public void createTestUser() {
-    userRepository.save(User.builder().deviceIdentifier("1111").nickName("testName").build());
-  }
 
   @Transactional
   public void findUserOrCreateUserAndInvitations(String deviceIdentifier) {
