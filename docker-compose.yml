@@ -1,0 +1,32 @@
+version: '3.7'
+
+services:
+  nginx:
+    build:
+      context: .
+      dockerfile: Dockerfile_nginx
+    image: jaehyeonkim19/nginx:0.1
+    ports:
+      - "80:80"
+    container_name: nginx-for-nawa-server
+    network_mode: "host"
+  nawa-invitation-server-green:
+    build:
+      context: .
+      dockerfile: Dockerfile_nawa
+      args:
+        JAR_FILE: build/libs/nawa-invitation-project-1.0-SNAPSHOT.jar
+    image: jaehyeonkim19/nawa-invitation-server:0.1
+    ports:
+      - "8081:8080"
+    container_name: nawa-invitation-server-green
+  nawa-invitation-server-blue:
+    build:
+      context: .
+      dockerfile: Dockerfile_nawa
+      args:
+        JAR_FILE: build/libs/nawa-invitation-project-1.0-SNAPSHOT.jar
+    image: jaehyeonkim19/nawa-invitation-server:0.1
+    ports:
+      - "8082:8080"
+    container_name: nawa-invitation-server-blue
