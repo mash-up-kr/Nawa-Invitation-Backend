@@ -9,6 +9,8 @@ public class ResDetailInvitationDto {
 
   private String templateBackgroundImageUrl;
 
+  private String templateTypeDescription;
+
   private String invitationTitle;
 
   private String invitationContents;
@@ -22,6 +24,7 @@ public class ResDetailInvitationDto {
   @Builder
   private ResDetailInvitationDto(
       String templateBackgroundImageUrl,
+      String templateTypeDescription,
       String invitationTitle,
       String invitationContents,
       LocalDateTime invitationTime,
@@ -29,6 +32,7 @@ public class ResDetailInvitationDto {
       MapInfoDto mapInfo
   ) {
     this.templateBackgroundImageUrl = templateBackgroundImageUrl;
+    this.templateTypeDescription = templateTypeDescription;
     this.invitationTitle = invitationTitle;
     this.invitationContents = invitationContents;
     this.invitationTime = invitationTime;
