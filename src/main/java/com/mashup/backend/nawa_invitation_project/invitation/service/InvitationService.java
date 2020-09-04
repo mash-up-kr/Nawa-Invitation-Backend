@@ -84,6 +84,7 @@ public class InvitationService {
 
     return ResDetailInvitationDto.builder()
         .templateBackgroundImageUrl(template.getBackgroundImageUrl())
+        .templateTypeDescription(template.getTypeDescription())
         .invitationTitle(invitation.getInvitationTitle())
         .invitationContents(invitation.getInvitationContents())
         .invitationTime(invitation.getInvitationTime())
