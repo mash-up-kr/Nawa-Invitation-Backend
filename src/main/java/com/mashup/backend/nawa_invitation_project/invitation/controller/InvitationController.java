@@ -3,6 +3,7 @@ package com.mashup.backend.nawa_invitation_project.invitation.controller;
 import com.mashup.backend.nawa_invitation_project.invitation.domain.Invitation;
 import com.mashup.backend.nawa_invitation_project.invitation.domain.InvitationRepository;
 import com.mashup.backend.nawa_invitation_project.invitation.dto.request.InvitationAddressRequestDto;
+import com.mashup.backend.nawa_invitation_project.invitation.dto.request.InvitationImageRequestDto;
 import com.mashup.backend.nawa_invitation_project.invitation.dto.request.InvitationTimeRequestDto;
 import com.mashup.backend.nawa_invitation_project.invitation.dto.InvitationWordsRequestDto;
 import com.mashup.backend.nawa_invitation_project.invitation.dto.response.ResDetailInvitationDto;
@@ -12,6 +13,7 @@ import com.mashup.backend.nawa_invitation_project.user.domain.UserRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -28,6 +30,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
 
 @Api(tags = "초대장 관련 APIs")
@@ -69,6 +72,18 @@ public class InvitationController {
       @RequestBody InvitationAddressRequestDto invitationAddressRequestDto
   ) {
     invitationService.updateInvitationAddress(deviceIdentifier, invitationAddressRequestDto);
+    return ResponseEntity.status(HttpStatus.OK).build();
+  }
+
+  @ApiOperation(value= "사진 등록 API",
+    notes = "사진 등록시 사용되는 API입니다. Content-Type을 multipart/form-data로 지정해야합니다.")
+  @PostMapping("/invitations/invitation-images")
+  public ResponseEntity<Void> uploadInvitationImage(
+      @RequestHeader(value = "deviceIdentifier") String deviceIdentifier,
+      InvitationImageRequestDto invitationImageRequestDto,
+      MultipartFile file
+  ) throws IOException {
+    invitationService.uploadInvitationImage(deviceIdentifier, invitationImageRequestDto, file);
     return ResponseEntity.status(HttpStatus.OK).build();
   }
 

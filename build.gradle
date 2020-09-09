@@ -33,6 +33,7 @@ dependencies {
     implementation("org.hibernate:hibernate-core:5.4.6.Final")
     implementation group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2' //swagger
     implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
+    implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-aws', version: '2.2.1.RELEASE'
 
     compile('org.mariadb.jdbc:mariadb-java-client') //maria-db
 
