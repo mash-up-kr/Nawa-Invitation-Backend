@@ -45,10 +45,11 @@ public class AwsS3Service {
   }
 
   public String upload(MultipartFile file) throws IOException {
-    StringBuffer stringBuffer = new StringBuffer(file.getOriginalFilename());
+    StringBuffer stringBuffer = new StringBuffer();
     Timestamp currentTimeStamp = new Timestamp(new Date().getTime());
-    stringBuffer.append("-");
     stringBuffer.append(currentTimeStamp);
+    stringBuffer.append("-");
+    stringBuffer.append(file.getOriginalFilename());
     String fileName = stringBuffer.toString();
 
     awsS3Client.putObject(new PutObjectRequest(bucket, fileName, file.getInputStream(), null)
