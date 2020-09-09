@@ -138,3 +138,6 @@ gradle-app.setting
 
 # db 설정 yml
 application-real-db.yml
+
+# aws 설정 yml
+application-aws.yml
