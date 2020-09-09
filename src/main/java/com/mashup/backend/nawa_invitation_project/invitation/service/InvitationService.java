@@ -84,10 +84,10 @@ public class InvitationService {
   }
 
   @Transactional
-  public void uploadInvitationImage(String deviceIdentifier, InvitationImageRequestDto invitationImageRequestDto, MultipartFile file) throws IOException {
+  public void uploadInvitationImage(String deviceIdentifier, Long templateId, MultipartFile file) throws IOException {
     String imageUrl = awsS3Service.upload(file);
     Optional<User> user = userRepository.findByDeviceIdentifier(deviceIdentifier);
-    Optional<Invitation> invitation = invitationRepository.findByUsersIdAndTemplatesId(user.get().getId(), invitationImageRequestDto.getTemplateId());
+    Optional<Invitation> invitation = invitationRepository.findByUsersIdAndTemplatesId(user.get().getId(), templateId);
     invitationImageRepository.save(InvitationImage.builder()
         .imageUrl(imageUrl)
         .invitationId(invitation.get().getId())

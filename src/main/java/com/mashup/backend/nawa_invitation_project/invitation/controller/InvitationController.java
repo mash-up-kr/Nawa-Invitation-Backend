@@ -80,10 +80,10 @@ public class InvitationController {
   @PostMapping("/invitations/invitation-images")
   public ResponseEntity<Void> uploadInvitationImage(
       @RequestHeader(value = "deviceIdentifier") String deviceIdentifier,
-      @RequestBody InvitationImageRequestDto invitationImageRequestDto,
+      Long templateId,
       MultipartFile file
   ) throws IOException {
-    invitationService.uploadInvitationImage(deviceIdentifier, invitationImageRequestDto, file);
+    invitationService.uploadInvitationImage(deviceIdentifier, templateId, file);
     return ResponseEntity.status(HttpStatus.OK).build();
   }
 
