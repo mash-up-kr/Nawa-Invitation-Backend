@@ -80,7 +80,7 @@ public class InvitationController {
   @PostMapping("/invitations/invitation-images")
   public ResponseEntity<Void> uploadInvitationImage(
       @RequestHeader(value = "deviceIdentifier") String deviceIdentifier,
-      InvitationImageRequestDto invitationImageRequestDto,
+      @RequestBody InvitationImageRequestDto invitationImageRequestDto,
       MultipartFile file
   ) throws IOException {
     invitationService.uploadInvitationImage(deviceIdentifier, invitationImageRequestDto, file);
