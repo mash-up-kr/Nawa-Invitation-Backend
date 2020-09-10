@@ -5,6 +5,7 @@ import com.mashup.backend.nawa_invitation_project.invitation.domain.Invitation;
 import com.mashup.backend.nawa_invitation_project.invitation.domain.InvitationImage;
 import com.mashup.backend.nawa_invitation_project.invitation.domain.InvitationImageRepository;
 import com.mashup.backend.nawa_invitation_project.invitation.domain.InvitationRepository;
+import com.mashup.backend.nawa_invitation_project.invitation.dto.InvitationImageDto;
 import com.mashup.backend.nawa_invitation_project.invitation.dto.InvitationWordsRequestDto;
 import com.mashup.backend.nawa_invitation_project.invitation.dto.request.InvitationAddressRequestDto;
 import com.mashup.backend.nawa_invitation_project.invitation.dto.request.InvitationImageRequestDto;
@@ -16,6 +17,7 @@ import com.mashup.backend.nawa_invitation_project.template.domain.TemplateReposi
 import com.mashup.backend.nawa_invitation_project.user.domain.User;
 import com.mashup.backend.nawa_invitation_project.user.domain.UserRepository;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -102,6 +104,16 @@ public class InvitationService {
     Template template = templateRepository.findById(templatesId)
         .orElseThrow(() -> new IllegalArgumentException("no template"));
 
+    List<InvitationImage> invitationImages = invitationImageRepository.findAllByInvitationId(invitation.getId());
+    List<InvitationImageDto> invitationImageDtos = new ArrayList<InvitationImageDto>();
+    for(InvitationImage invitationImage: invitationImages) {
+      InvitationImageDto invitationImageDto = InvitationImageDto.builder()
+          .id(invitationImage.getId())
+          .imageUrl(invitationImage.getImageUrl())
+          .build();
+      invitationImageDtos.add(invitationImageDto);
+    }
+
     return ResDetailInvitationDto.builder()
         .templateBackgroundImageUrl(template.getBackgroundImageUrl())
         .templateTypeDescription(template.getTypeDescription())
@@ -115,6 +127,7 @@ public class InvitationService {
             .x(invitation.getX())
             .y(invitation.getY())
             .build())
+        .invitationImages(invitationImageDtos)
         .build();
   }
 
