@@ -5,8 +5,10 @@ import com.mashup.backend.nawa_invitation_project.invitation.domain.Invitation;
 import com.mashup.backend.nawa_invitation_project.invitation.domain.InvitationImage;
 import com.mashup.backend.nawa_invitation_project.invitation.domain.InvitationImageRepository;
 import com.mashup.backend.nawa_invitation_project.invitation.domain.InvitationRepository;
+import com.mashup.backend.nawa_invitation_project.invitation.dto.InvitationImageDto;
 import com.mashup.backend.nawa_invitation_project.invitation.dto.InvitationWordsRequestDto;
 import com.mashup.backend.nawa_invitation_project.invitation.dto.request.InvitationAddressRequestDto;
+import com.mashup.backend.nawa_invitation_project.invitation.dto.request.InvitationImagePatchRequestDto;
 import com.mashup.backend.nawa_invitation_project.invitation.dto.request.InvitationImageRequestDto;
 import com.mashup.backend.nawa_invitation_project.invitation.dto.request.InvitationTimeRequestDto;
 import com.mashup.backend.nawa_invitation_project.invitation.dto.response.MapInfoDto;
@@ -16,10 +18,10 @@ import com.mashup.backend.nawa_invitation_project.template.domain.TemplateReposi
 import com.mashup.backend.nawa_invitation_project.user.domain.User;
 import com.mashup.backend.nawa_invitation_project.user.domain.UserRepository;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
-import javax.swing.text.html.Option;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -84,14 +86,35 @@ public class InvitationService {
   }
 
   @Transactional
-  public void uploadInvitationImage(String deviceIdentifier, InvitationImageRequestDto invitationImageRequestDto, MultipartFile file) throws IOException {
+  public void uploadInvitationImage(String deviceIdentifier,
+      InvitationImageRequestDto invitationImageRequestDto, MultipartFile file) throws IOException {
     String imageUrl = awsS3Service.upload(file);
     Optional<User> user = userRepository.findByDeviceIdentifier(deviceIdentifier);
-    Optional<Invitation> invitation = invitationRepository.findByUsersIdAndTemplatesId(user.get().getId(), invitationImageRequestDto.getTemplateId());
+    Optional<Invitation> invitation = invitationRepository
+        .findByUsersIdAndTemplatesId(user.get().getId(), invitationImageRequestDto.getTemplateId());
     invitationImageRepository.save(InvitationImage.builder()
         .imageUrl(imageUrl)
         .invitationId(invitation.get().getId())
         .build());
+  }
+
+  @Transactional
+  public void updateInvitationImage(InvitationImagePatchRequestDto invitationImagePatchRequestDto,
+      MultipartFile file) throws IOException {
+    String imageUrl = awsS3Service.upload(file);
+    Optional<InvitationImage> invitationImage = invitationImageRepository
+        .findById(invitationImagePatchRequestDto.getId());
+    awsS3Service.delete(invitationImage.get().getImageUrl());
+    invitationImage.get().updateImageUrl(imageUrl);
+  }
+
+  @Transactional
+  public void deleteInvitationImage(Long id)
+      throws IOException {
+    Optional<InvitationImage> invitationImage = invitationImageRepository
+        .findById(id);
+    awsS3Service.delete(invitationImage.get().getImageUrl());
+    invitationImageRepository.deleteById(id);
   }
 
   public ResDetailInvitationDto getDetailInvitation(String hashCode) {
@@ -101,6 +124,17 @@ public class InvitationService {
     Long templatesId = invitation.getTemplatesId();
     Template template = templateRepository.findById(templatesId)
         .orElseThrow(() -> new IllegalArgumentException("no template"));
+
+    List<InvitationImage> invitationImages = invitationImageRepository
+        .findAllByInvitationId(invitation.getId());
+    List<InvitationImageDto> invitationImageDtos = new ArrayList<InvitationImageDto>();
+    for (InvitationImage invitationImage : invitationImages) {
+      InvitationImageDto invitationImageDto = InvitationImageDto.builder()
+          .id(invitationImage.getId())
+          .imageUrl(invitationImage.getImageUrl())
+          .build();
+      invitationImageDtos.add(invitationImageDto);
+    }
 
     return ResDetailInvitationDto.builder()
         .templateBackgroundImageUrl(template.getBackgroundImageUrl())
@@ -115,19 +149,21 @@ public class InvitationService {
             .x(invitation.getX())
             .y(invitation.getY())
             .build())
+        .invitationImages(invitationImageDtos)
         .build();
   }
 
   public String getHashCode(String deviceIdentifier, Long templateId) {
     User user = userRepository.findByDeviceIdentifier(deviceIdentifier)
-        .orElseThrow(()-> new NoSuchElementException());
+        .orElseThrow(() -> new NoSuchElementException());
 
-    if(!templateRepository.existsById(templateId)){
+    if (!templateRepository.existsById(templateId)) {
       throw new NoSuchElementException();
     }
 
-    Invitation invitation = invitationRepository.findByUsersIdAndTemplatesId(user.getId(), templateId)
-        .orElseThrow(()->new NoSuchElementException());
+    Invitation invitation = invitationRepository
+        .findByUsersIdAndTemplatesId(user.getId(), templateId)
+        .orElseThrow(() -> new NoSuchElementException());
 
     return invitation.getHashCode();
   }

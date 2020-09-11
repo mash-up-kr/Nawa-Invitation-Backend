@@ -1,6 +1,8 @@
 package com.mashup.backend.nawa_invitation_project.invitation.dto.response;
 
+import com.mashup.backend.nawa_invitation_project.invitation.dto.InvitationImageDto;
 import java.time.LocalDateTime;
+import java.util.List;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -21,6 +23,8 @@ public class ResDetailInvitationDto {
 
   private MapInfoDto mapInfo;
 
+  private List<InvitationImageDto> invitationImages;
+
   @Builder
   private ResDetailInvitationDto(
       String templateBackgroundImageUrl,
@@ -29,7 +33,8 @@ public class ResDetailInvitationDto {
       String invitationContents,
       LocalDateTime invitationTime,
       String invitationPlaceName,
-      MapInfoDto mapInfo
+      MapInfoDto mapInfo,
+      List<InvitationImageDto> invitationImages
   ) {
     this.templateBackgroundImageUrl = templateBackgroundImageUrl;
     this.templateTypeDescription = templateTypeDescription;
@@ -38,6 +43,7 @@ public class ResDetailInvitationDto {
     this.invitationTime = invitationTime;
     this.invitationPlaceName = invitationPlaceName;
     this.mapInfo = mapInfo;
+    this.invitationImages = invitationImages;
   }
 
 }
