@@ -126,7 +126,7 @@ public class InvitationService {
         .orElseThrow(() -> new IllegalArgumentException("no template"));
 
     MapInfoDto mapInfo = null;
-    if (!isCustomPlace(invitation.getX(), invitation.getY())) {
+    if (isCustomPlace(invitation.getX(), invitation.getY())) {
       mapInfo = MapInfoDto.builder()
           .invitationAddressName(invitation.getInvitationAddressName())
           .invitationRoadAddressName(invitation.getInvitationRoadAddressName())
