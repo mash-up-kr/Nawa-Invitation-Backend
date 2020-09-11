@@ -8,6 +8,7 @@ import com.mashup.backend.nawa_invitation_project.invitation.domain.InvitationRe
 import com.mashup.backend.nawa_invitation_project.invitation.dto.InvitationImageDto;
 import com.mashup.backend.nawa_invitation_project.invitation.dto.InvitationWordsRequestDto;
 import com.mashup.backend.nawa_invitation_project.invitation.dto.request.InvitationAddressRequestDto;
+import com.mashup.backend.nawa_invitation_project.invitation.dto.request.InvitationImagePatchRequestDto;
 import com.mashup.backend.nawa_invitation_project.invitation.dto.request.InvitationImageRequestDto;
 import com.mashup.backend.nawa_invitation_project.invitation.dto.request.InvitationTimeRequestDto;
 import com.mashup.backend.nawa_invitation_project.invitation.dto.response.MapInfoDto;
@@ -94,6 +95,14 @@ public class InvitationService {
         .imageUrl(imageUrl)
         .invitationId(invitation.get().getId())
         .build());
+  }
+
+  @Transactional
+  public void updateInvitationImage(InvitationImagePatchRequestDto invitationImagePatchRequestDto, MultipartFile file) throws IOException {
+    String imageUrl = awsS3Service.upload(file);
+    Optional<InvitationImage> invitationImage = invitationImageRepository.findById(invitationImagePatchRequestDto.getId());
+    awsS3Service.delete(invitationImage.get().getImageUrl());
+    invitationImage.get().updateImageUrl(imageUrl);
   }
 
   public ResDetailInvitationDto getDetailInvitation(String hashCode) {

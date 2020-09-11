@@ -3,6 +3,7 @@ package com.mashup.backend.nawa_invitation_project.invitation.controller;
 import com.mashup.backend.nawa_invitation_project.invitation.domain.Invitation;
 import com.mashup.backend.nawa_invitation_project.invitation.domain.InvitationRepository;
 import com.mashup.backend.nawa_invitation_project.invitation.dto.request.InvitationAddressRequestDto;
+import com.mashup.backend.nawa_invitation_project.invitation.dto.request.InvitationImagePatchRequestDto;
 import com.mashup.backend.nawa_invitation_project.invitation.dto.request.InvitationImageRequestDto;
 import com.mashup.backend.nawa_invitation_project.invitation.dto.request.InvitationTimeRequestDto;
 import com.mashup.backend.nawa_invitation_project.invitation.dto.InvitationWordsRequestDto;
@@ -21,6 +22,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -75,8 +77,8 @@ public class InvitationController {
     return ResponseEntity.status(HttpStatus.OK).build();
   }
 
-  @ApiOperation(value= "사진 등록 API",
-    notes = "사진 등록시 사용되는 API입니다. Content-Type을 multipart/form-data로 지정해야합니다.")
+  @ApiOperation(value = "사진 등록 API",
+      notes = "사진 등록시 사용되는 API입니다. Content-Type을 multipart/form-data로 지정해야합니다.")
   @PostMapping("/invitations/invitation-images")
   public ResponseEntity<Void> uploadInvitationImage(
       @RequestHeader(value = "deviceIdentifier") String deviceIdentifier,
@@ -84,6 +86,17 @@ public class InvitationController {
       MultipartFile file
   ) throws IOException {
     invitationService.uploadInvitationImage(deviceIdentifier, invitationImageRequestDto, file);
+    return ResponseEntity.status(HttpStatus.OK).build();
+  }
+
+  @ApiOperation(value = "사진 수정 API")
+  @PatchMapping("/invitations/invitation-images")
+  public ResponseEntity<Void> updateInvitationImage(
+      @RequestHeader(value = "deviceIdentifier") String deviceIdentifier,
+      InvitationImagePatchRequestDto invitationImagePatchRequestDto,
+      MultipartFile file
+  ) throws IOException {
+    invitationService.updateInvitationImage(invitationImagePatchRequestDto, file);
     return ResponseEntity.status(HttpStatus.OK).build();
   }
 
@@ -103,7 +116,7 @@ public class InvitationController {
   public ResponseEntity<ResDetailInvitationDto> getTemplateSpecificSingleInvitationInfo(
       @RequestHeader(value = "deviceIdentifier") String deviceIdentifier,
       @RequestParam(value = "template-id") Long templateId) {
-    if(templateId == null && deviceIdentifier == null){
+    if (templateId == null && deviceIdentifier == null) {
       throw new HttpClientErrorException(HttpStatus.BAD_REQUEST);
     }
     String hashCode = invitationService.getHashCode(deviceIdentifier, templateId);
