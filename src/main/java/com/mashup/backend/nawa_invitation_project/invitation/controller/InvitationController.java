@@ -100,6 +100,16 @@ public class InvitationController {
     return ResponseEntity.status(HttpStatus.OK).build();
   }
 
+  @ApiOperation(value = "사진 삭제 API")
+  @DeleteMapping("/invitations/invitation-images/{id}")
+  public ResponseEntity<Void> deleteInvitationImage(
+      @RequestHeader(value = "deviceIdentifier") String deviceIdentifier,
+      @PathVariable Long id
+  ) throws IOException {
+    invitationService.deleteInvitationImage(id);
+    return ResponseEntity.status(HttpStatus.OK).build();
+  }
+
   @ApiOperation(value = "초대장 조회 API",
       notes = "hash-code 에 해당하는 완성된 초대장을 조회하는 API입니다.")
   @GetMapping("/invitations/{hash-code}")

@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
-import javax.swing.text.html.Option;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -87,10 +86,12 @@ public class InvitationService {
   }
 
   @Transactional
-  public void uploadInvitationImage(String deviceIdentifier, InvitationImageRequestDto invitationImageRequestDto, MultipartFile file) throws IOException {
+  public void uploadInvitationImage(String deviceIdentifier,
+      InvitationImageRequestDto invitationImageRequestDto, MultipartFile file) throws IOException {
     String imageUrl = awsS3Service.upload(file);
     Optional<User> user = userRepository.findByDeviceIdentifier(deviceIdentifier);
-    Optional<Invitation> invitation = invitationRepository.findByUsersIdAndTemplatesId(user.get().getId(), invitationImageRequestDto.getTemplateId());
+    Optional<Invitation> invitation = invitationRepository
+        .findByUsersIdAndTemplatesId(user.get().getId(), invitationImageRequestDto.getTemplateId());
     invitationImageRepository.save(InvitationImage.builder()
         .imageUrl(imageUrl)
         .invitationId(invitation.get().getId())
@@ -98,11 +99,22 @@ public class InvitationService {
   }
 
   @Transactional
-  public void updateInvitationImage(InvitationImagePatchRequestDto invitationImagePatchRequestDto, MultipartFile file) throws IOException {
+  public void updateInvitationImage(InvitationImagePatchRequestDto invitationImagePatchRequestDto,
+      MultipartFile file) throws IOException {
     String imageUrl = awsS3Service.upload(file);
-    Optional<InvitationImage> invitationImage = invitationImageRepository.findById(invitationImagePatchRequestDto.getId());
+    Optional<InvitationImage> invitationImage = invitationImageRepository
+        .findById(invitationImagePatchRequestDto.getId());
     awsS3Service.delete(invitationImage.get().getImageUrl());
     invitationImage.get().updateImageUrl(imageUrl);
+  }
+
+  @Transactional
+  public void deleteInvitationImage(Long id)
+      throws IOException {
+    Optional<InvitationImage> invitationImage = invitationImageRepository
+        .findById(id);
+    awsS3Service.delete(invitationImage.get().getImageUrl());
+    invitationImageRepository.deleteById(id);
   }
 
   public ResDetailInvitationDto getDetailInvitation(String hashCode) {
@@ -113,9 +125,10 @@ public class InvitationService {
     Template template = templateRepository.findById(templatesId)
         .orElseThrow(() -> new IllegalArgumentException("no template"));
 
-    List<InvitationImage> invitationImages = invitationImageRepository.findAllByInvitationId(invitation.getId());
+    List<InvitationImage> invitationImages = invitationImageRepository
+        .findAllByInvitationId(invitation.getId());
     List<InvitationImageDto> invitationImageDtos = new ArrayList<InvitationImageDto>();
-    for(InvitationImage invitationImage: invitationImages) {
+    for (InvitationImage invitationImage : invitationImages) {
       InvitationImageDto invitationImageDto = InvitationImageDto.builder()
           .id(invitationImage.getId())
           .imageUrl(invitationImage.getImageUrl())
@@ -142,14 +155,15 @@ public class InvitationService {
 
   public String getHashCode(String deviceIdentifier, Long templateId) {
     User user = userRepository.findByDeviceIdentifier(deviceIdentifier)
-        .orElseThrow(()-> new NoSuchElementException());
+        .orElseThrow(() -> new NoSuchElementException());
 
-    if(!templateRepository.existsById(templateId)){
+    if (!templateRepository.existsById(templateId)) {
       throw new NoSuchElementException();
     }
 
-    Invitation invitation = invitationRepository.findByUsersIdAndTemplatesId(user.getId(), templateId)
-        .orElseThrow(()->new NoSuchElementException());
+    Invitation invitation = invitationRepository
+        .findByUsersIdAndTemplatesId(user.getId(), templateId)
+        .orElseThrow(() -> new NoSuchElementException());
 
     return invitation.getHashCode();
   }
