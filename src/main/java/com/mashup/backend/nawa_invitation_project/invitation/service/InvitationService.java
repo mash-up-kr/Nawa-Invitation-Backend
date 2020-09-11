@@ -125,6 +125,16 @@ public class InvitationService {
     Template template = templateRepository.findById(templatesId)
         .orElseThrow(() -> new IllegalArgumentException("no template"));
 
+    MapInfoDto mapInfo = null;
+    if (isCustomPlace(invitation.getX(), invitation.getY())) {
+      mapInfo = MapInfoDto.builder()
+          .invitationAddressName(invitation.getInvitationAddressName())
+          .invitationRoadAddressName(invitation.getInvitationRoadAddressName())
+          .x(invitation.getX())
+          .y(invitation.getY())
+          .build();
+    }
+
     List<InvitationImage> invitationImages = invitationImageRepository
         .findAllByInvitationId(invitation.getId());
     List<InvitationImageDto> invitationImageDtos = new ArrayList<InvitationImageDto>();
@@ -143,12 +153,7 @@ public class InvitationService {
         .invitationContents(invitation.getInvitationContents())
         .invitationTime(invitation.getInvitationTime())
         .invitationPlaceName(invitation.getInvitationPlaceName())
-        .mapInfo(MapInfoDto.builder()
-            .invitationAddressName(invitation.getInvitationAddressName())
-            .invitationRoadAddressName(invitation.getInvitationRoadAddressName())
-            .x(invitation.getX())
-            .y(invitation.getY())
-            .build())
+        .mapInfo(mapInfo)
         .invitationImages(invitationImageDtos)
         .build();
   }
@@ -166,5 +171,9 @@ public class InvitationService {
         .orElseThrow(() -> new NoSuchElementException());
 
     return invitation.getHashCode();
+  }
+
+  private boolean isCustomPlace(Double x, Double y) {
+    return !(x != null && y != null);
   }
 }
