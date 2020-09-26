@@ -1,4 +1,9 @@
 FROM openjdk:8-jdk-alpine
+
+ENV TZ=Asia/Seoul
+
 ARG JAR_FILE=nawa-invitation-project-1.0-SNAPSHOT.jar
+
 COPY ${JAR_FILE} nawa-invitation.jar
+
 ENTRYPOINT ["java","-jar","-Dserver.port=8080","-Dspring.profiles.active=product","nawa-invitation.jar"]
