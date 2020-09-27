@@ -2,6 +2,7 @@ package com.mashup.backend.nawa_invitation_project.invitation.controller;
 
 import com.mashup.backend.nawa_invitation_project.invitation.dto.request.PostInvitationRequestDto;
 import com.mashup.backend.nawa_invitation_project.invitation.dto.response.HashCodeResponseDto;
+import com.mashup.backend.nawa_invitation_project.invitation.dto.response.ResDetailInvitationDto;
 import com.mashup.backend.nawa_invitation_project.invitation.service.InvitationV2Service;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -10,6 +11,8 @@ import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -33,5 +36,14 @@ public class InvitationV2Controller {
   ) throws IOException {
     return ResponseEntity.status(HttpStatus.OK).body(
         invitationV2Service.postInvitation(deviceIdentifier, postInvitationRequestDto, files));
+  }
+
+  @GetMapping("/apis/v2/invitations/{hash-code}")
+  public ResponseEntity<ResDetailInvitationDto> getInvitation(
+      @PathVariable(value = "hash-code") String hashCode
+  ) {
+    return ResponseEntity
+        .status(HttpStatus.OK)
+        .body(invitationV2Service.getInvitationInfo(hashCode));
   }
 }
