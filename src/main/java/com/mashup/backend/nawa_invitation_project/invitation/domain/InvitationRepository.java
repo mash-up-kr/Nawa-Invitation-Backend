@@ -12,6 +12,8 @@ public interface InvitationRepository extends JpaRepository<Invitation, Long> {
 
   Optional<Invitation> findByUsersIdAndTemplatesId(Long usersId, Long templatesId);
 
+  List<Invitation> findAllByUsersIdAndTemplatesIdOrderByCreatedAtDesc(Long usersId, Long templatesId);
+
   Optional<Invitation> findByHashCode(String hashCode);
 
   List<Invitation> findByUsersId(Long usersId);
