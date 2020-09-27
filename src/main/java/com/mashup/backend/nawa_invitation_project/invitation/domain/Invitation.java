@@ -50,6 +50,7 @@ public class Invitation extends BaseTimeEntity {
 
   @Builder
   private Invitation(
+      String invitationTitle,
       String invitationContents,
       LocalDateTime invitationTime,
       String invitationAddressName,
@@ -61,6 +62,7 @@ public class Invitation extends BaseTimeEntity {
       Long usersId,
       Long templatesId
   ) {
+    this.invitationTitle = invitationTitle;
     this.invitationContents = invitationContents;
     this.invitationTime = invitationTime;
     this.invitationAddressName = invitationAddressName;
