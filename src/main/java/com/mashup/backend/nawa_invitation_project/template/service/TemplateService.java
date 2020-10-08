@@ -47,14 +47,14 @@ public class TemplateService {
   }
 
   private String getInvitationHashCode(Long templatesId, Long usersId) {
-    Invitation invitation = invitationRepository.findByUsersIdAndTemplatesId(usersId, templatesId)
+    Invitation invitation = invitationRepository.findTopByUsersIdAndTemplatesIdOrderByIdDesc(usersId, templatesId)
         .orElseThrow(()->new NoSuchElementException());
 
     return invitation.getHashCode();
   }
 
   private Boolean isExistUsersTemplateInvitation(Long usersId, Long templatesId) {
-    Invitation invitation = invitationRepository.findByUsersIdAndTemplatesId(usersId, templatesId)
+    Invitation invitation = invitationRepository.findTopByUsersIdAndTemplatesIdOrderByIdDesc(usersId, templatesId)
         .orElseThrow(() -> new NoSuchElementException()); //TODO : custom exception
 
     return !isNullForAllContents(invitation);

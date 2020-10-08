@@ -43,7 +43,7 @@ public class InvitationService {
     User user = userRepository.findByDeviceIdentifier(deviceIdentifier)
         .orElseThrow(() -> new NoSuchElementException()); //TODO : custom exception
 
-    Invitation invitation = invitationRepository.findByUsersIdAndTemplatesId(user.getId(),
+    Invitation invitation = invitationRepository.findTopByUsersIdAndTemplatesIdOrderByIdDesc(user.getId(),
         invitationWordsRequestDto.getTemplatesId())
         .orElseThrow(() -> new NoSuchElementException()); //TODO : custom exception
 
@@ -59,7 +59,7 @@ public class InvitationService {
     User user = userRepository.findByDeviceIdentifier(deviceIdentifier)
         .orElseThrow(() -> new NoSuchElementException()); //TODO : custom exception
 
-    Invitation invitation = invitationRepository.findByUsersIdAndTemplatesId(user.getId(),
+    Invitation invitation = invitationRepository.findTopByUsersIdAndTemplatesIdOrderByIdDesc(user.getId(),
         invitationTimeRequestDto.getTemplatesId())
         .orElseThrow(() -> new NoSuchElementException()); //TODO : custom exception
 
@@ -72,7 +72,7 @@ public class InvitationService {
     User user = userRepository.findByDeviceIdentifier(deviceIdentifier)
         .orElseThrow(() -> new NoSuchElementException()); //TODO : custom exception
 
-    Invitation invitation = invitationRepository.findByUsersIdAndTemplatesId(user.getId(),
+    Invitation invitation = invitationRepository.findTopByUsersIdAndTemplatesIdOrderByIdDesc(user.getId(),
         invitationAddressRequestDto.getTemplatesId())
         .orElseThrow(() -> new NoSuchElementException()); //TODO : custom exception
 
@@ -91,7 +91,7 @@ public class InvitationService {
     String imageUrl = awsS3Service.upload(file);
     Optional<User> user = userRepository.findByDeviceIdentifier(deviceIdentifier);
     Optional<Invitation> invitation = invitationRepository
-        .findByUsersIdAndTemplatesId(user.get().getId(), invitationImageRequestDto.getTemplateId());
+        .findTopByUsersIdAndTemplatesIdOrderByIdDesc(user.get().getId(), invitationImageRequestDto.getTemplateId());
     invitationImageRepository.save(InvitationImage.builder()
         .imageUrl(imageUrl)
         .invitationId(invitation.get().getId())
@@ -167,7 +167,7 @@ public class InvitationService {
     }
 
     Invitation invitation = invitationRepository
-        .findByUsersIdAndTemplatesId(user.getId(), templateId)
+        .findTopByUsersIdAndTemplatesIdOrderByIdDesc(user.getId(), templateId)
         .orElseThrow(() -> new NoSuchElementException());
 
     return invitation.getHashCode();

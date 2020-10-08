@@ -10,7 +10,7 @@ public interface InvitationRepository extends JpaRepository<Invitation, Long> {
 
   Boolean existsByTemplatesIdAndUsersId(Long templateId, Long userId);
 
-  Optional<Invitation> findByUsersIdAndTemplatesId(Long usersId, Long templatesId);
+  Optional<Invitation> findTopByUsersIdAndTemplatesIdOrderByIdDesc(Long usersId, Long templatesId);
 
   List<Invitation> findAllByUsersIdAndTemplatesIdOrderByCreatedAtDesc(Long usersId, Long templatesId);
 

@@ -60,7 +60,7 @@ public class TemplateV2Service {
 
   private Boolean isExistUsersTemplateInvitation(Long usersId, Long templatesId) {
     Optional<Invitation> invitation = invitationRepository
-        .findByUsersIdAndTemplatesId(usersId, templatesId);
+        .findTopByUsersIdAndTemplatesIdOrderByIdDesc(usersId, templatesId);
     if (!invitation.isPresent()) {
       return false;
     }
