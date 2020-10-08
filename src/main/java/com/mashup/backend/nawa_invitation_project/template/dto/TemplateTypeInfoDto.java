@@ -17,6 +17,8 @@ public class TemplateTypeInfoDto {
 
   private String invitationHashCode;
 
+  private String templateBackgroundImageUrl;
+
   @Builder
   public TemplateTypeInfoDto(
       Long templateId,
@@ -24,7 +26,8 @@ public class TemplateTypeInfoDto {
       String typeDescription,
       String imageUrl,
       Boolean isExistInvitation,
-      String invitationHashCode
+      String invitationHashCode,
+      String templateBackgroundImageUrl
   ) {
     this.templateId = templateId;
     this.typeName = typeName;
@@ -32,5 +35,6 @@ public class TemplateTypeInfoDto {
     this.imageUrl = imageUrl;
     this.isExistInvitation = isExistInvitation;
     this.invitationHashCode = invitationHashCode;
+    this.templateBackgroundImageUrl = templateBackgroundImageUrl;
   }
 }
