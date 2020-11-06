@@ -10,6 +10,11 @@
 - [나와 초대장 - 웹](https://github.com/mash-up-kr/Nawa-Invitation-Web)
 - [나와 초대장 - 안드로이드](https://github.com/mash-up-kr/Potato-Invitation-Android)
 
+## 💌 시연 영상
+
+![시연영상](https://user-images.githubusercontent.com/47874101/98402970-8652c580-20ab-11eb-8ce7-87d3605bb229.gif)
+
+
 ## 🖥 서버 아키텍쳐
 
 ![서버 아키텍쳐](https://user-images.githubusercontent.com/47874101/98395688-f8251200-209f-11eb-87fd-295590e7b627.png)
