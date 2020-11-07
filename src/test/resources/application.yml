@@ -1,0 +1,45 @@
+spring:
+  profiles:
+    active: local
+    include: aws
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
+---
+
+spring:
+  profiles: local
+  jpa:
+    database-platform: H2
+    show-sql: true
+    generate-ddl: true
+    open-in-view: false
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+  h2:
+    console:
+      enabled: true
+
+  logging:
+    level:
+      root: trace
+
+---
+
+spring:
+  profiles: product
+  jpa:
+    open-in-view: false
+    generate-ddl: false
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+
+spring.profiles.include: real-db
