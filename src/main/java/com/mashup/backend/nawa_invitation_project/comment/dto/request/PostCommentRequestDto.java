@@ -1,12 +1,19 @@
 package com.mashup.backend.nawa_invitation_project.comment.dto.request;
 
+import lombok.Builder;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 
 @Getter
-@RequiredArgsConstructor
+@NoArgsConstructor
 public class PostCommentRequestDto {
 
-  private final String userName;
-  private final String content;
+  private String userName;
+  private String content;
+
+  @Builder
+  public PostCommentRequestDto(String userName, String content) {
+    this.userName = userName;
+    this.content = content;
+  }
 }
