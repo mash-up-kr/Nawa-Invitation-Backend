@@ -21,13 +21,15 @@ public class UserV2ControllerTest {
 
   @Test
   public void deviceIdentifier가_등록된다() throws Exception {
-    mvc.perform(post("/apis/v2/users").header("deviceIdentifier", "abc"))
+    mvc.perform(post("/apis/v2/users")
+        .header("deviceIdentifier", "abc"))
         .andExpect(status().isOk());
   }
 
   @Test
   public void deviceIdentifier가_없으면_등록이_안된다() throws Exception {
-    mvc.perform(post("/apis/v2/users").header("deviceIdentifier", ""))
+    mvc.perform(post("/apis/v2/users")
+        .header("deviceIdentifier", ""))
         .andExpect(status().is4xxClientError());
   }
 
