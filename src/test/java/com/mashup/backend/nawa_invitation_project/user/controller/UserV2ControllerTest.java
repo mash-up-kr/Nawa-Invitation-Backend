@@ -26,8 +26,8 @@ public class UserV2ControllerTest {
   }
 
   @Test
-  public void deviceIdentifer가_없으면_등록이_안된다() throws Exception {
-    mvc.perform(post("/apis/v2/users").header("deviceIdentifer", ""))
+  public void deviceIdentifier가_없으면_등록이_안된다() throws Exception {
+    mvc.perform(post("/apis/v2/users").header("deviceIdentifier", ""))
         .andExpect(status().is4xxClientError());
   }
 
