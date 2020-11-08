@@ -1,5 +1,7 @@
 #!/bin/bash
 
+DOCKER_APP_NAME=nawa-invitation-server
+
 git pull origin develop
 
 echo "kill and start application"
@@ -12,9 +14,5 @@ echo "clean project"
 
 echo "build project"
 ./gradlew build
-
-DOCKER_APP_NAME=nawa-invitation-server
-
-EXIST_BLUE=$(docker ps | grep ${DOCKER_APP_NAME}-blue)
 
 docker-compose -f docker-compose.yml up -d --build ${DOCKER_APP_NAME}-blue
