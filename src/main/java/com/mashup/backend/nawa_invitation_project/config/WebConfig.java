@@ -23,6 +23,7 @@ public class WebConfig implements WebMvcConfigurer {
 
   @Override
   public void addInterceptors(InterceptorRegistry registry) {
-    registry.addInterceptor(deviceIdentifierInterceptor).addPathPatterns("/**");
+    registry.addInterceptor(deviceIdentifierInterceptor)
+        .addPathPatterns("/apis/v2/users");
   }
 }
