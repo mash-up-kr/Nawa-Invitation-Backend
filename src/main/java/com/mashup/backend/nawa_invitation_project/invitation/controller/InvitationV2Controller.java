@@ -38,6 +38,7 @@ public class InvitationV2Controller {
         invitationV2Service.postInvitation(deviceIdentifier, postInvitationRequestDto, files));
   }
 
+  @ApiOperation(value = "초대장 조회 API")
   @GetMapping("/apis/v2/invitations/{hash-code}")
   public ResponseEntity<ResDetailInvitationDto> getInvitation(
       @PathVariable(value = "hash-code") String hashCode
