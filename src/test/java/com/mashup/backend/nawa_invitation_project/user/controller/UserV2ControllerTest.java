@@ -1,5 +1,8 @@
 package com.mashup.backend.nawa_invitation_project.user.controller;
 
+import com.mashup.backend.nawa_invitation_project.user.domain.UserRepository;
+import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +21,14 @@ public class UserV2ControllerTest {
 
   @Autowired
   private MockMvc mvc;
+
+  @Autowired
+  private UserRepository userRepository;
+
+  @After
+  public void tearDown() {
+    userRepository.deleteAll();
+  }
 
   @Test
   public void deviceIdentifier가_등록된다() throws Exception {
