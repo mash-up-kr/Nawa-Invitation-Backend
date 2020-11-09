@@ -6,9 +6,12 @@ import com.mashup.backend.nawa_invitation_project.invitation.domain.Invitation;
 import com.mashup.backend.nawa_invitation_project.invitation.domain.InvitationRepository;
 import com.mashup.backend.nawa_invitation_project.invitation.dto.request.PostInvitationRequestDto;
 import com.mashup.backend.nawa_invitation_project.invitation.dto.response.ResDetailInvitationDto;
+import com.mashup.backend.nawa_invitation_project.template.domain.Template;
+import com.mashup.backend.nawa_invitation_project.template.domain.TemplateRepository;
 import com.mashup.backend.nawa_invitation_project.user.domain.User;
 import com.mashup.backend.nawa_invitation_project.user.domain.UserRepository;
 import java.time.LocalDateTime;
+import java.util.List;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -40,6 +43,9 @@ public class InvitationV2ControllerTest {
   @Autowired
   private InvitationRepository invitationRepository;
 
+  @Autowired
+  private TemplateRepository templateRepository;
+
   private String deviceIdentifier;
   private String deviceIdentifierHeaderName;
 
@@ -48,8 +54,8 @@ public class InvitationV2ControllerTest {
     mvc.perform(post("/template-types/dummy"))
         .andExpect(status().isOk());
 
-    deviceIdentifier = "abc";
-    deviceIdentifierHeaderName = "deviceIdentifier";
+    this.deviceIdentifier = "abc";
+    this.deviceIdentifierHeaderName = "deviceIdentifier";
     userRepository.save(User.builder()
         .deviceIdentifier(deviceIdentifier)
         .build());
@@ -57,8 +63,9 @@ public class InvitationV2ControllerTest {
 
   @After
   public void tearDown() {
-    userRepository.deleteAll();
     invitationRepository.deleteAll();
+    userRepository.deleteAll();
+    templateRepository.deleteAll();
   }
 
   @Test
@@ -95,7 +102,9 @@ public class InvitationV2ControllerTest {
 
   @Test
   public void 초대장이_조회된다() throws Exception {
-    Long templateId = 1L;
+    List<Template> templateList = templateRepository.findAll();
+
+    Long templateId = templateList.get(0).getId();
     String invitationTitle = "invitationTitle";
     String invitationContents = "invitationContents";
     LocalDateTime invitationTime = LocalDateTime.now();
