@@ -141,3 +141,5 @@ application-real-db.yml
 
 # aws 설정 yml
 application-aws.yml
+
+.DS_Store
