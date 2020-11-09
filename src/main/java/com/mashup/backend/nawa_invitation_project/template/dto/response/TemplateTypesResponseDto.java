@@ -4,8 +4,10 @@ import com.mashup.backend.nawa_invitation_project.template.dto.TemplateTypeInfoD
 import java.util.List;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
 public class TemplateTypesResponseDto {
 
   private List<TemplateTypeInfoDto> invitationTypeItemList;

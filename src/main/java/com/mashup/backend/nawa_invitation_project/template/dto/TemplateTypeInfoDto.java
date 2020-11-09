@@ -2,8 +2,10 @@ package com.mashup.backend.nawa_invitation_project.template.dto;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
 public class TemplateTypeInfoDto {
   private Long templateId;
 

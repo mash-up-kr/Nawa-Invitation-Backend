@@ -11,7 +11,7 @@ public class DeviceIdentifierInterceptor implements HandlerInterceptor {
   @Override
   public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object Handler) throws Exception {
     String deviceIdentifier = request.getHeader("deviceIdentifier");
-    if(deviceIdentifier.equals("") || deviceIdentifier == null) {
+    if(deviceIdentifier == null || deviceIdentifier.equals("")) {
       response.sendError(400, "Set device identifier.");
       return false;
     }
