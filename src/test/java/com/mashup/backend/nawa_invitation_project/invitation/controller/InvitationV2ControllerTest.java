@@ -5,6 +5,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.mashup.backend.nawa_invitation_project.invitation.domain.Invitation;
 import com.mashup.backend.nawa_invitation_project.invitation.domain.InvitationRepository;
 import com.mashup.backend.nawa_invitation_project.invitation.dto.request.PostInvitationRequestDto;
+import com.mashup.backend.nawa_invitation_project.invitation.dto.response.HashCodeResponseDto;
 import com.mashup.backend.nawa_invitation_project.invitation.dto.response.ResDetailInvitationDto;
 import com.mashup.backend.nawa_invitation_project.template.domain.Template;
 import com.mashup.backend.nawa_invitation_project.template.domain.TemplateRepository;
@@ -50,7 +51,7 @@ public class InvitationV2ControllerTest {
   private String deviceIdentifierHeaderName;
 
   @Before
-  public void setUp() throws Exception{
+  public void setUp() throws Exception {
     mvc.perform(post("/template-types/dummy"))
         .andExpect(status().isOk());
 
@@ -95,8 +96,8 @@ public class InvitationV2ControllerTest {
 
     mvc.perform(post(invitationPostUrl)
         .header(deviceIdentifierHeaderName, deviceIdentifier)
-        .contentType(MediaType.MULTIPART_FORM_DATA)
-        .content(new ObjectMapper().writeValueAsString(postInvitationRequestDto)))
+        .content(new ObjectMapper().writeValueAsString(postInvitationRequestDto))
+        .contentType(MediaType.MULTIPART_FORM_DATA))
         .andExpect(status().isOk());
   }
 

@@ -40,7 +40,8 @@ public class InvitationV2Service {
       PostInvitationRequestDto postInvitationRequestDto,
       MultipartFile[] files
   ) throws IOException {
-    Optional<User> user = userRepository.findByDeviceIdentifier(deviceIdentifier);
+    User user = userRepository.findByDeviceIdentifier(deviceIdentifier)
+        .orElseThrow(() -> new IllegalArgumentException("no user"));
 
     Invitation invitation = Invitation.builder()
         .invitationTitle(postInvitationRequestDto.getInvitationTitle())
@@ -52,7 +53,7 @@ public class InvitationV2Service {
         .x(postInvitationRequestDto.getLongitude())
         .y(postInvitationRequestDto.getLatitude())
         .hashCode(CustomUtil.getBase64Uuid())
-        .usersId(user.get().getId())
+        .usersId(user.getId())
         .templatesId(postInvitationRequestDto.getTemplateId())
         .build();
 

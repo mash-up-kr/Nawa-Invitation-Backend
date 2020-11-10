@@ -9,30 +9,29 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 @Getter
-@RequiredArgsConstructor
 public class PostInvitationRequestDto {
 
-  private Long templateId;
+  private final Long templateId;
 
-  private String invitationTitle;
+  private final String invitationTitle;
 
-  private String invitationContents;
+  private final String invitationContents;
 
   @DateTimeFormat(iso = ISO.DATE_TIME)
-  private LocalDateTime invitationTime;
+  private final LocalDateTime invitationTime;
 
-  private String invitationAddressName;
+  private final String invitationAddressName;
 
-  private String invitationRoadAddressName;
+  private final String invitationRoadAddressName;
 
-  private String invitationPlaceName;
+  private final String invitationPlaceName;
 
-  private  Double latitude;
+  private final Double latitude;
 
-  private Double longitude;
+  private final Double longitude;
 
   @Builder
-  private PostInvitationRequestDto(
+  public PostInvitationRequestDto(
       Long templateId,
       String invitationTitle,
       String invitationContents,
